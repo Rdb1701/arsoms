@@ -1,0 +1,148 @@
+@import url(roboto/fonts.css);
+@font-face {
+  font-family: "Flaticon";
+  src: url("./font-icon/Flaticon.eot");
+  src: url("./font-icon/Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./font-icon/Flaticon.woff2") format("woff2"),
+       url("./font-icon/Flaticon.woff") format("woff"),
+       url("./font-icon/Flaticon.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Flaticon';
+  src: url('./font-icon8/Flaticon.eot');
+  src: url('./font-icon8/Flaticon.eot?#iefix') format('embedded-opentype'),
+       url('./font-icon8/Flaticon.woff') format('woff'),
+       url('./font-icon8/Flaticon.ttf') format('truetype'),
+       url('./font-icon8/Flaticon.svg#Flaticon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./font-icon/Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+  font-family: Flaticon;
+  font-style: normal;
+}
+
+.flaticon-bell:before { content: "\f100"; }
+.flaticon-document:before { content: "\f101"; }
+.flaticon-plus:before { content: "\f102"; }
+.flaticon-down:before { content: "\f103"; }
+.flaticon-angle-pointing-to-left:before { content: "\f104"; }
+.flaticon-angle-arrow-pointing-to-right:before { content: "\f105"; }
+.flaticon-diagnosis:before { content: "\f106"; }
+.flaticon-clip:before { content: "\f107"; }
+.flaticon-maps-and-flags:before { content: "\f108"; }
+.flaticon-list:before { content: "\f109"; }
+.flaticon-doctor:before { content: "\f10a"; }
+.flaticon-savings:before { content: "\f10b"; }
+.flaticon-document-1:before { content: "\f10c"; }
+.flaticon-document-2:before { content: "\f10d"; }
+.flaticon-gear:before { content: "\f10e"; }
+.flaticon-close:before { content: "\f10f"; }
+.flaticon-check:before { content: "\f110"; }
+.flaticon-diagnosis-1:before { content: "\f111"; }
+.flaticon-back:before { content: "\f112"; }
+.flaticon-eye:before { content: "\f113"; }
+.flaticon-pencil:before { content: "\f114"; }
+.flaticon-graph:before { content: "\f115"; }
+.flaticon-list-1:before { content: "\f116"; }
+.flaticon-type:before { content: "\f117"; }
+.flaticon-excel:before { content: "\f118"; }
+.flaticon-print:before { content: "\f119"; }
+.flaticon-favorite-heart-button:before { content: "\f11a"; }
+.flaticon-menu:before { content: "\f11b"; }
+.flaticon-peso:before { content: "\f11c"; }
+.flaticon-list-2:before { content: "\f11d"; }
+.flaticon-plus-1:before { content: "\f11e"; }
+.flaticon-push-pin:before { content: "\f11f"; }
+.flaticon-clock:before { content: "\f120"; }
+.flaticon-bin:before { content: "\f121"; }
+.flaticon-stock:before { content: "\f122"; }
+.flaticon-calendar-1:before { content: "\f123"; }
+.flaticon-report:before { content: "\f124"; }
+.flaticon-search:before { content: "\f125"; }
+.flaticon-bill:before { content: "\f126"; }
+.flaticon-gear-1:before { content: "\f127"; }
+.flaticon-wrench:before { content: "\f128"; }
+.flaticon-wc:before { content: "\f129"; }
+.flaticon-moving:before { content: "\f12a"; }
+.flaticon-order:before { content: "\f12b"; }
+.flaticon-wholesale:before { content: "\f12c"; }
+.flaticon-stock-1:before { content: "\f12d"; }
+.flaticon-male-surgeon-wearing-uniform:before { content: "\f12e"; }
+.flaticon-edit:before { content: "\f12f"; }
+.flaticon-account:before { content: "\f130"; }
+.flaticon-login:before { content: "\f131"; }
+.flaticon-healthcare-and-medical:before { content: "\f132"; }
+.flaticon-shield:before { content: "\f133"; }
+.flaticon-user:before { content: "\f134"; }
+.flaticon-out:before { content: "\f135"; }
+.flaticon-paper:before { content: "\f136"; }
+.flaticon-paper-plane:before { content: "\f137"; }
+.flaticon-graph-1:before { content: "\f138"; }
+.flaticon-statistics:before { content: "\f139"; }
+.flaticon-money-bag-with-dollar-symbol:before { content: "\f13a"; }
+.flaticon-rx:before { content: "\f13b"; }
+.flaticon-help-round-button:before { content: "\f13c"; }
+.flaticon-weight:before { content: "\f13d"; }
+.flaticon-add:before { content: "\f13e"; }
+
+.flaticon-video-round:before{content:'\0041';}
+.flaticon-document-round:before{content:'\0042';}
+.flaticon-other-document-round:before{content:'\0043';}
+.flaticon-excel-round:before{content:'\0044';}
+.flaticon-ledger-round:before{content:'\0045';}
+.flaticon-word-round:before{content:'\0046';}
+.flaticon-img-round:before{content:'\0047';}
+.flaticon-add-circle:before{content:'\0048';}
+.flaticon-download-round:before{content:'\0049';}
+.flaticon-note:before{content:'\004a';}
+.flaticon-pdf:before{content:'\004b';}
+.flaticon-collection:before{content:'\004c';}
+.flaticon-transmittal:before{content:'\004d';}
+.flaticon-transmittal-2:before{content:'\004e';}
+.flaticon-list-document-round:before{content:'\004f';}
+.flaticon-ppt-round:before{content:'\0050';}
+.flaticon-jpg-round:before{content:'\0051';}
+.flaticon-box-add-rounded:before{content:'\0052';}
+.flaticon-stethoscope-round:before{content:'\0053';}
+.flaticon-surgeon-round:before{content:'\0054';}
+.flaticon-fertilization:before{content:'\0055';}
+.flaticon-weighing-round:before{content:'\0056';}
+.flaticon-location-clinic-round:before{content:'\0057';}
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(./font-google/google-font.woff2) format('woff2'),
+       url(./font-google/google-font.eot) format("embedded-opentype"),
+       url(./font-google/google-font.woff) format("woff"),
+       url(./font-google/google-font.ttf) format("truetype");
+}
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+}

@@ -1,0 +1,59 @@
+.mobile-hide {
+  display: block;
+}
+.login-header {
+  padding: 7px 80px!important;
+}
+.form-header {
+  background: #192f5d!important;
+}
+.center-header {
+  flex: 1;
+}
+.btn-signin {
+  background: #192f5d!important; 
+  border-color: #192f5d!important;
+}
+.btn-signin:hover {
+  background: #183777!important;
+}
+.brand-logo {
+  display: flex;
+}
+.brand-logo img {
+  height: 40px; 
+  width: auto!important; 
+  margin-right: 10px;
+}
+h1 {
+  font-size: 23px;
+  margin: 5px 0; 
+  font-family: serif; 
+  padding: 0px 0; 
+  display: flex; 
+  color: #192f5d;
+}
+/* FOR Tablet */
+@media (max-width: 991px) {
+  .login-header {
+    padding: 7px 15px!important;
+  }
+}
+/* FOR Smartphone */
+@media (max-width: 767px) {
+  h1 {
+    /* display: none; */
+    font-size: 15px;
+    padding: 5px 0; 
+  }
+}
+
+@media (max-width: 360px) {
+  h1 {
+    font-size: 23px;
+    padding: 0; 
+  }
+  .mobile-hide {
+    display: none;
+  }
+}

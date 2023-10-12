@@ -1,0 +1,30 @@
+#img_viewer {
+	display: none; justify-content: centter; align-items: center; padding: 20px!important; position: fixed; top: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); z-index: 1000;
+}
+#img_viewer_close {
+	position: absolute; 
+	right: 20px; 
+	top: 15px; 
+	z-index: 1002; 
+	cursor: pointer;
+}
+#img_viewer_close i {
+	color: #9c9c9c; 
+	font-size: 45px;
+	font-weight: 100;
+}
+#img_viewer_close i:hover {
+	color: #dbdbdb; 
+}
+#img_details {
+	display: flex; justify-content: center; align-items: center; width: 100%; flex-direction: column;
+}
+#img_details img {
+	width: auto; max-width: 100%; max-height: 505px;
+}
+#img_details #img_label {
+	display: flex; justify-content: center; align-items: center; width: 100%;
+}
+#img_label #dLabel {
+	padding-right: 10px; padding-left: 10px; padding-top: 40px; line-height: 24px; max-width: 950px; margin: 0 auto; text-align: center; color: #fff; font-size: 16px;
+}
