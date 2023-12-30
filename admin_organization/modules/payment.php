@@ -27,7 +27,7 @@ include('../header.php');
         <table class="table text-dark" id="myTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th class="text-center">Student Name</th>
+              <th class="text-start">Student Name</th>
               <th class="text-center">Year Level</th>
               <th class="text-center">Event Name</th>
               <th class="text-center">Date of Event</th>
@@ -44,7 +44,6 @@ include('../header.php');
     </div>
   </div>
 </div>
-
 
 <?php
 include('modal/modal_payment.php');
@@ -75,6 +74,14 @@ include('../footer.php');
     $('#add_pmodal').modal('show')
   }
 
+  function clickMe(){
+
+        $('.checkItem').prop("checked", true)
+    }
+  
+  function notclickMe(){
+    $('.checkItem').prop("checked", false)
+  }
 
   $(document).ready(function() {
 
@@ -112,7 +119,7 @@ include('../footer.php');
       ],
       dom: "Bfrtip",
       buttons: [{
-        extend: "pageLength",
+          extend: "pageLength",
           className: "btn-sm btn-success"
         },
         {
@@ -166,18 +173,18 @@ include('../footer.php');
     $('#form_payment_p').on('submit', function(e) {
       e.preventDefault();
 
-      let event = $('#add_event_p').val();
+      let event      = $('#add_event_p').val();
       let student_id = $('#add_student').val();
-      let fee = $('#add_fee_p').val();
-
+      let fee        = $('#add_fee_p').val();
 
       $.ajax({
         url: 'payments/payment_per_add',
         type: 'POST',
         data: {
-          event : event,
-          fee   : fee,
+          event: event,
+          fee: fee,
           student_id: student_id
+
         },
         dataType: 'JSON',
         beforeSend: function() {
@@ -206,16 +213,13 @@ include('../footer.php');
     $('#form_payment').on('submit', function(e) {
       e.preventDefault();
 
-      let event = $('#add_event').val();
-      let fee = $('#add_fee').val();
+      if($('.checkItem:checked').length > 0)
+      {
 
       $.ajax({
         url: 'payments/payment_add',
         type: 'POST',
-        data: {
-          event : event,
-          fee   : fee
-        },
+        data: $(this).serialize(),
         dataType: 'JSON',
         beforeSend: function() {
           $('#p_fee').prop('disabled', true);
@@ -239,6 +243,8 @@ include('../footer.php');
       }).fail(function() {
         console.log('fail')
       })
+
+    }
 
     })
 
@@ -313,6 +319,69 @@ include('../footer.php');
       })
 
     })
+
+
+
+    $('#add_organization').on('change', function() {
+      let organization_id = $("#add_organization option:selected").val();
+      $.ajax({
+        type: "POST",
+        url: "payments/payment_change_org",
+        dataType: 'html',
+        data: {
+          organization_id: organization_id
+        }
+      }).done(function(data) {
+        $('#add_event').html(data);
+      });
+    });
+
+
+    $('#add_organization').change(function(e) {
+      e.preventDefault();
+      let tvalue = this.value;
+      let table = "<thead>";
+      table += "<tr>" +
+        "<th class=\"text-center\"><button type='button' class ='btn btn-primary' onclick = 'clickMe()'>Select All</button> <button type='button' class ='btn btn-primary' onclick = 'notclickMe()'>Deselect</button></th>" +
+        "<th class=\"text-center\">ID Number</th>" +
+        "<th class=\"text-center\">Student Name</th>" +
+        "<th class=\"text-center\">Year Level</th>" +
+        "</tr>" +
+        " </thead>" +
+        " <tbody>";
+
+      $.ajax({
+        type: "POST",
+        url: "payments/payment_change_student",
+        dataType: 'JSON',
+        data: {
+          tvalue: tvalue,
+
+        },
+      }).done(function(res) {
+
+        if (res.res_success == 1) {
+
+          $.each(res.student, function(key, value) {
+            table += '<tr>' +
+              '<td class="text-center"><input type="checkbox" class= "checkItem" value = "' + value.student_id + '" name="s_id[]"</td>' +
+              '<td class="text-center">' + value.username + '</td>' +
+              '<td class="text-center">' + value.fname + ' ' + value.lname + '</td>' +
+              '<td class="text-center">' + value.year_level + '</td>' +
+
+              '<tr>'
+            $('#populate_table').html(table)
+
+          })
+
+        } else {
+
+        }
+      });
+    })
+
+
+
 
 
 

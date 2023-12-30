@@ -15,6 +15,7 @@ include("../header.php");
         <table class="table text-dark" id="myTable" width="100%" cellspacing="0">
           <thead>
             <tr>
+              <th class="text-center">Logo</th>
               <th class="text-center">Organization Name</th>
               <th class="text-center">Organization Details</th>
               <th class="text-center">Documents</th>
@@ -40,6 +41,17 @@ include("../footer.php");
 ?>
 
 <script>
+
+function logo_upload(organization_id){
+    $('#logo_id').val(organization_id)
+    $('#upload_excel_modal').modal({
+      backdrop: 'static',
+      keyboard: false
+    })
+    $('#upload_excel_modal').modal('show');
+
+}
+
   //EMPTY DOCUMENT
   function refresh() {
     location.reload();
@@ -134,7 +146,7 @@ include("../footer.php");
 
 
   //FILE DOCUMENTS
-  function file_documents(organization_id, intent, request, form, cbl) {
+  function file_documents(organization_id, intent, request, form, cbl, list_activities, roster) {
 
     //INTENT LETTER
     let intent_letter = document.getElementById("intent");
@@ -175,6 +187,28 @@ include("../footer.php");
       cbl_1.setAttribute("data-target", "#alert_modal");
     } else {
       cbl_1.setAttribute("href", documentUrl4);
+    }
+
+     //List of Activities
+     let list_1 = document.getElementById("list");
+    let documentUrl5 = "organization/uploads/" + list_activities;
+
+    if (list_activities == "") {
+      list_1.setAttribute("data-toggle", "modal");
+      list_1.setAttribute("data-target", "#alert_modal");
+    } else {
+      list_1.setAttribute("href", documentUrl5);
+    }
+
+     //Roster
+     let roster_1 = document.getElementById("roster");
+    let documentUrl6 = "organization/uploads/" + roster;
+
+    if (roster == "") {
+      roster_1.setAttribute("data-toggle", "modal");
+      roster_1.setAttribute("data-target", "#alert_modal");
+    } else {
+      roster_1.setAttribute("href", documentUrl6);
     }
 
     $('#document_modal').modal({
@@ -275,6 +309,10 @@ include("../footer.php");
         },
         {
           data: [6],
+          "className": "text-center"
+        },
+        {
+          data: [7],
           "className": "text-center"
         }
 
@@ -581,6 +619,120 @@ include("../footer.php");
         alert("Please select a file.");
       }
     })
+
+       // -----------------------------list Activities UPLOAD-------------------------------------------//
+
+       $("#submit5").on("click", function(e) {
+      e.preventDefault();
+
+      var fd = new FormData($("#form_upload")[0]);
+      var files = $("#add_file_list")[0].files;
+
+      for (item of fd) {
+        console.log(item[0], item[1]);
+      }
+      // Check file selected or not
+      if (files.length > 0) {
+        fd.append('add_file_list', files[0]);
+
+        $.ajax({
+          url: 'organization/org_upload5',
+          type: 'post',
+          data: fd,
+          contentType: false,
+          processData: false,
+          success: function(response) {
+            if (response != 0) {
+              alert("Successfully Uploaded")
+
+            } else {
+              alert('file not uploaded');
+            }
+          },
+        });
+      } else {
+        alert("Please select a file.");
+      }
+    })
+
+    // -----------------------------Roster UPLOAD-------------------------------------------//
+
+    $("#submit6").on("click", function(e) {
+      e.preventDefault();
+
+      var fd = new FormData($("#form_upload")[0]);
+      var files = $("#add_file_roster")[0].files;
+
+      for (item of fd) {
+        console.log(item[0], item[1]);
+      }
+      // Check file selected or not
+      if (files.length > 0) {
+        fd.append('add_file_roster', files[0]);
+
+        $.ajax({
+          url: 'organization/org_upload6',
+          type: 'post',
+          data: fd,
+          contentType: false,
+          processData: false,
+          success: function(response) {
+            if (response != 0) {
+              alert("Successfully Uploaded")
+
+            } else {
+              alert('file not uploaded');
+            }
+          },
+        });
+      } else {
+        alert("Please select a file.");
+      }
+    })
+
+
+
+     // -----------------------------UPLOAD LOGO-------------------------------------------//
+
+     $("#upload_logo").on("submit", function(e) {
+      e.preventDefault();
+
+      var fd = new FormData($("#upload_logo")[0]);
+      var files = $("#logo_file")[0].files;
+
+      for (item of fd) {
+        console.log(item[0], item[1]);
+      }
+      // Check file selected or not
+      if (files.length > 0) {
+        fd.append('logo_file', files[0]);
+
+        $.ajax({
+          url: 'organization/org_logo_upload',
+          type: 'post',
+          data: fd,
+          contentType: false,
+          processData: false,
+          success: function(response) {
+            if (response != 0) {
+              alert('Successfully Uploaded Logo');
+              var currentPageIndex = table.page.info().page;
+              table.ajax.reload(function() {
+                table.page(currentPageIndex).draw(false);
+              }, false);
+
+              $('#upload_excel_modal').modal('hide');
+            } else {
+              alert('file not uploaded');
+            }
+          },
+        });
+      } else {
+        alert("Please select a file.");
+      }
+    })
+
+
 
 
   })

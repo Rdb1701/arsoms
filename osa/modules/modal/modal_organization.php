@@ -162,6 +162,19 @@
                     <div class="d-flex">
                         <a id="cbl" href="#" class="btn btn-primary">Download Document</a>
                     </div> 
+                    <br>
+                    
+                    <label data-error="wrong" data-success="right">List of Activities<span class="text-danger">*</span></label>
+                    <div class="d-flex">
+                        <a id="list" href="#" class="btn btn-primary">Download Document</a>
+                    </div>
+
+                    <br>
+                    <label data-error="wrong" data-success="right">Roster<span class="text-danger">*</span></label>
+                    <div class="d-flex">
+                        <a id="roster" href="#" class="btn btn-primary">Download Document</a>
+                    </div>
+                    <br>
 
                 </div>
                 <div class="modal-footer">

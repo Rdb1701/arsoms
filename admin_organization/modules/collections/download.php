@@ -2,61 +2,33 @@
 include("../../../app/database.php");
 require_once("../../../assets/libraries/tcpdf/tcpdf.php");
 
-$count_paid = '';
+$event_name = '';
+$org_name   = '';
 $sum_pay    = '';
-// $count_sanction = '';
-// $sum_sanction = '';
+$event_id   = '';
+$results = array();
 
-
-$query = "
-SELECT COUNT(*) FROM tbl_payment as pay
-LEFT JOIN tbl_events as ev ON ev.event_id = pay.event_id
-LEFT JOIN tbl_organization as org ON org.organization_id = ev.organization_id
-LEFT JOIN tbl_users as us ON us.user_id = org.user_id
-WHERE pay.status = '1' AND org.user_id = '".$_SESSION['admin_org']['user_id']."'
-";
-
-$result = mysqli_query($db, $query) or die(mysqli_error($db));
-while ($row = mysqli_fetch_array($result)) {
-  $count_paid =  $row[0];
-}
 
 
 //SUM PAIDS
 $query_sum = "
-SELECT SUM(fee) FROM tbl_payment as pay
+SELECT ev.event_desc, org.org_name, SUM(fee) as sum_fee FROM tbl_payment as pay
 LEFT JOIN tbl_events as ev ON ev.event_id = pay.event_id
 LEFT JOIN tbl_organization as org ON org.organization_id = ev.organization_id
 LEFT JOIN tbl_users as us ON us.user_id = org.user_id
 WHERE pay.status = '1' AND org.user_id = '".$_SESSION['admin_org']['user_id']."'
+GROUP BY ev.event_id
 ";
 $result_sum = mysqli_query($db, $query_sum) or die(mysqli_error($db));
 while ($row = mysqli_fetch_array($result_sum)) {
+  $temp_arr = array();
 
-  $sum_pay =  $row[0];
+  $temp_arr['event_name'] = $row['event_desc'];
+  $temp_arr['org_name']   = $row['org_name'];
+  $temp_arr['sum_pay']    =  $row['sum_fee'];
+
+  $results[] = $temp_arr;
 }
-
-// //COUNT SANCTION
-// $query = "
-// SELECT COUNT(*) FROM tbl_payment
-// WHERE status = '3'
-// ";
-
-// $result = mysqli_query($db, $query) or die(mysqli_error($db));
-// while ($row = mysqli_fetch_array($result)) {
-//   $count_sanction =  $row[0];
-// }
-
-// //SUM SANCTION
-// $query_sum = "
-// SELECT SUM(fee) FROM tbl_payment
-// WHERE status = '3'
-// ";
-// $result_sum = mysqli_query($db, $query_sum) or die(mysqli_error($db));
-// while ($row = mysqli_fetch_array($result_sum)) {
-
-//   $sum_sanction =  $row[0];
-// }
 
 
 $dateToday = date("M j, Y", strtotime(date("Y-m-d")));
@@ -92,7 +64,7 @@ require_once(dirname(__FILE__).'/lang/eng.php');
 $pdf->setLanguageArray($l);
 }
 
-// ---------------------------------------------------------
+// --------------------------------------------------------- //
 
 // add a page
 $pdf->AddPage();
@@ -124,30 +96,42 @@ $d_html .= '
 
 <table border="1" style=" padding: 5px;">
         <tr style="border: 1px solid black;">
-        <th class="text-center" style = "text-align: center;"><b>No. of Students</b></th>
+        <th class="text-center" style = "text-align: center;"><b>Organization</b></th>
+        <th class="text-center" style = "text-align: center;"><b>Event Name</b></th>
         <th class="text-center" style = "text-align: center;"><b>Total Collected</b></th>
         </tr>
 ';
 
 
+if ($results) {
+  foreach ($results as $res) {
+
 $d_html .= '
-        <tr>
-        <td style = "text-align: center;">'.$count_paid. '</td>
-
-';
-
-if($sum_pay == ''){
+<tr>
+<td style="font-size: 15px; text-align: center;  padding: 10%;  font-weight: bold;">'.$res['org_name'].'</td>
+<td style="font-size: 15px; text-align: center;  padding: 10%;  font-weight: bold;">'.$res['event_name'].'</td>';
+if($res['sum_pay'] == ''){
   $d_html .= '
 <td style = "text-align: center;">0</td>
 </tr>
 ';
 }else{
   $d_html .= '
-  <td style = "text-align: center;">P '.$sum_pay.'</td>
+  <td style="font-size: 15px; text-align: center;  padding: 10%;">&nbsp;P '.$res['sum_pay'].'&nbsp;&nbsp;</td>
   
   </tr>
   ';
 }
+
+  }
+
+}else {
+$d_html .= '
+<tr class="text-center">
+<td class="text-start text-danger" colspan="11">No Record Found</td>
+</tr>';
+
+} 
 
 
 $d_html .= '               

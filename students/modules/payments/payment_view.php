@@ -2,6 +2,7 @@
 include("../../../app/database.php");
 
 $payments = array();
+$data  = array();
 
 $query = "
 SELECT pay.*, ev.event_desc, stud.fname, stud.lname, ev.event_date, ev.last_event_date, stud.year_level, org.org_name
@@ -57,7 +58,7 @@ foreach($payments as $key => $value){
     $remarks_sanction = "";
 
     if($value['status'] == '<span class="bg-warning text-white" style="padding: 3px 8px; border-radius: 5px;">Unpaid</span>'){
-      $remarks_sanction = "Obligation Fee";
+      $remarks_sanction = $value['sanction_remarks'];
     }else if($value['status'] == '<span class="bg-success text-white" style="padding: 3px 8px; border-radius: 5px;">Paid</span>'){
       $remarks_sanction = "Paid";
     }else{

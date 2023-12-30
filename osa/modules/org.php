@@ -77,7 +77,7 @@ include("../footer.php");
     }
 
     //FILE DOCUMENTS
-    function file_documents(organization_id, intent, request, form, cbl) {
+    function file_documents(organization_id, intent, request, form, cbl, list_activities, roster) {
 
         //INTENT LETTER
         let intent_letter = document.getElementById("intent");
@@ -117,6 +117,28 @@ include("../footer.php");
             cbl_1.setAttribute("data-target", "#alert_modal");
         } else {
             cbl_1.setAttribute("href", documentUrl4);
+        }
+
+        //List of Activities
+        let list_1 = document.getElementById("list");
+        let documentUrl5 = "../../admin_organization/modules/organization/uploads/" + list_activities;
+
+        if (list_activities == "") {
+            list_1.setAttribute("data-toggle", "modal");
+            list_1.setAttribute("data-target", "#alert_modal");
+        } else {
+            list_1.setAttribute("href", documentUrl5);
+        }
+
+        //Roster
+        let roster_1 = document.getElementById("roster");
+        let documentUrl6 = "../../admin_organization/modules/organization/uploads/" + roster;
+
+        if (roster == "") {
+            roster_1.setAttribute("data-toggle", "modal");
+            roster_1.setAttribute("data-target", "#alert_modal");
+        } else {
+            roster_1.setAttribute("href", documentUrl6);
         }
 
         $('#document_modal').modal({

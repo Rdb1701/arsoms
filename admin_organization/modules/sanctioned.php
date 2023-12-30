@@ -48,7 +48,6 @@ include('../footer.php');
             backdrop: 'static',
             keyboard: false
         })
-
         $('#add_pmodal').modal('show')
 
     }

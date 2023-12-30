@@ -10,40 +10,24 @@ require '../../../assets/libraries/PHPMailer/src/Exception.php';
 require '../../../assets/libraries/PHPMailer/src/PHPMailer.php';
 require '../../../assets/libraries/PHPMailer/src/SMTP.php';
 
+$event           =  mysqli_real_escape_string($db, $_POST['add_event']);
+$fee             =  mysqli_real_escape_string($db, $_POST['add_fee']);
+$purpose         =  mysqli_real_escape_string($db, $_POST['add_purpose']);
+$organization_id =  mysqli_real_escape_string($db, $_POST['add_organization']);
+$s_id            =  $_POST['s_id'];
 
-extract($_POST);
+
 $res_success      = 0;
 $res_message      = "";
 $data             = array();
 $students         = array();
-$organization_id  = '';
-
-
-// $query_event = "
-// SELECT * FROM tbl_payment
-// WHERE event_id = '$event' AND status = '0'
-// ";
-// $result = mysqli_query($db, $query_event);
-
-// if (!mysqli_num_rows($result)) {
-
-//EVENT VIEW
-$query = "
-SELECT * FROM tbl_events
-WHERE event_id = '$event'
-";
-$result = mysqli_query($db, $query);
-if (mysqli_num_rows($result) > 0) {
-
-  $row = mysqli_fetch_assoc($result);
-  $organization_id =  $row['organization_id'];
-
-}
 
 //GET student_id
 $query = "
-SELECT * FROM tbl_students
-WHERE organization_id = '$organization_id'
+SELECT stud.* 
+FROM tbl_students as stud
+LEFT JOIN tbl_students_exists as ext ON ext.student_id_number = stud.username
+WHERE ext.organization_id = '$organization_id'
 ";
 
 $result = mysqli_query($db, $query);
@@ -54,8 +38,8 @@ if ($numRows > 0) {
       $temp_arr = array();
 
       $temp_arr['student_id'] = $row['student_id'];
-      $temp_arr['email'] = $row['email'];
-      $temp_arr['fname'] = $row['fname'];
+      $temp_arr['email']      = $row['email'];
+      $temp_arr['fname']      = $row['fname'];
 
       $students[] = $temp_arr;
 
@@ -64,7 +48,8 @@ if ($numRows > 0) {
   $res_message = "No Members in that organization";
 }
 
-foreach($students as $key => $value){
+for($count = 0; $count < count($s_id); $count++)
+{
 
     //INSERT ALL STUDENT WITH THE SPECIFIC EVENT
     $insert_query = "
@@ -73,12 +58,14 @@ foreach($students as $key => $value){
     student_id,
     fee,
     status,
+    sanction_remarks,
     date_inserted
     )VALUES(
     '$event',
-    '".$value['student_id']."',
+    '".$s_id[$count]."',
     '$fee',
     '0',
+    '$purpose',
     '".date("Y-m-d H:i:s")."'
     )
     ";

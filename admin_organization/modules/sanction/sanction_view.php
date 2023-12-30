@@ -2,6 +2,7 @@
 include("../../../app/database.php");
 
 $payments = array();
+$data = array();
 
 $query = "
 SELECT pay.*, ev.event_desc, stud.fname, stud.lname, ev.event_date, ev.last_event_date, stud.year_level
@@ -9,7 +10,7 @@ FROM tbl_payment as pay
 LEFT JOIN tbl_events as ev ON ev.event_id = pay.event_id
 LEFT JOIN tbl_organization as org ON org.organization_id = ev.organization_id
 LEFT JOIN tbl_students as stud ON stud.student_id = pay.student_id
-WHERE pay.status = '2'
+WHERE pay.status = '2' and org.user_id = '".$_SESSION['admin_org']['user_id']."'
 ORDER BY stud.lname
 ";
 

@@ -1,0 +1,17 @@
+{
+    "name": "63909/arsoms",
+    "autoload": {
+        "psr-4": {
+            "63909\\Arsoms\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Maylyn Cabillanes",
+            "email": "asscatcampus@gmail.com"
+        }
+    ],
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.29"
+    }
+}

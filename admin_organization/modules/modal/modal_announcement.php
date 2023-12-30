@@ -13,7 +13,7 @@ $opt1 .= "</select>";
 
 <!-- ADD ORGANIZATION -->
 <div class="modal fade" tabindex="-1" role="dialog" id="add_modal">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title font-weight-bold">Add Announcement Post</h5>
@@ -33,7 +33,7 @@ $opt1 .= "</select>";
                     </div>
                     <div class="md-form">
                         <label data-error="wrong" data-success="right">Announcement Description<span class="text-danger">*</span></label>
-                       <textarea name="" id="add_announcement" class="form-control" cols="10" rows="7" required></textarea>
+                       <textarea name="" id="add_announcement" class="tinymce form-control" cols="10" rows="7" required></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -60,7 +60,7 @@ $opt2 .= "</select>";
 
 <!-- ADD ORGANIZATION -->
 <div class="modal fade" tabindex="-1" role="dialog" id="edit_modal">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title font-weight-bold">Edit Announcement Post</h5>
@@ -81,7 +81,7 @@ $opt2 .= "</select>";
                     </div>
                     <div class="md-form">
                         <label data-error="wrong" data-success="right">Announcement Description<span class="text-danger">*</span></label>
-                       <textarea name="" id="edit_announcement" class="form-control" cols="10" rows="7" required></textarea>
+                       <textarea name="" id="edit_announcement" class="tinymce form-control" cols="10" rows="7" required></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

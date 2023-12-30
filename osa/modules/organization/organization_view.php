@@ -2,6 +2,7 @@
 include("../../../app/database.php");
 
 $organization = array();
+$data = array();
 
 $query = "
 SELECT * FROM tbl_organization
@@ -43,6 +44,8 @@ if ($numRows > 0) {
     $temp_arr['request_letter']       = $row['request_letter'];
     $temp_arr['form_membership']      = $row['form_membership'];
     $temp_arr['CBL']                  = $row['CBL'];
+    $temp_arr['list_activities']      = $row['list_activities'];
+    $temp_arr['roster']                = $row['roster'];
     $temp_arr['type']                 = $row['type'];
     $temp_arr['isActive']             = $active;
     $temp_arr['status']               = $status;
@@ -59,7 +62,7 @@ foreach($organization as $key => $value){
      <button class = 'btn btn-warning' title='View' onclick='view_details(".$value['organization_id'].")'><i class='fa fa-eye'></i></button>&nbsp;
      ";
      $button_documents = "
-     <button class = 'btn btn-warning' title='View Documents' onclick='file_documents(".$value['organization_id'].",\"".$value['intent_letter']."\",\"".$value['request_letter']."\",\"".$value['form_membership']."\",\"".$value['CBL']."\")'><i class='fa fa-file'></i></button>&nbsp;
+     <button class = 'btn btn-warning' title='View Documents' onclick='file_documents(".$value['organization_id'].",\"".$value['intent_letter']."\",\"".$value['request_letter']."\",\"".$value['form_membership']."\",\"".$value['CBL']."\",\"".$value['list_activities']."\",\"".$value['roster']."\")'><i class='fa fa-file'></i></button>&nbsp;
      ";
 
      //ACTION BUTTONS

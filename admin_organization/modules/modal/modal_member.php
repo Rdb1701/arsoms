@@ -1,3 +1,52 @@
+<!-------------------------------------------- Change Password modal ------------------------------------------------->
+<div class="modal fade" id="changepassword_modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- username, lname, fname, gender, phone, user_type_id -->
+
+      <div class="modal-header text-center">
+        <h3 class="modal-title w-100 dark-grey-text font-weight-bold">Change Password</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-lable="close">&times;</button>
+      </div>
+
+      <form id="d_form_cp">
+        <div class="modal-body mx-4">
+
+          <input type="hidden" id="cp_id" value="">
+
+          <div class="md-form">
+            <label data-error="wrong" data-success="right">Username</label>
+
+            <input type="text" class="form-control validate" id="cp_username" readonly>
+          </div>
+
+          <div class="md-form">
+            <label data-error="wrong" data-success="right">Enter New Password</label>
+            <span class="text-danger">*</span></label>
+            <input type="password" class="form-control validate" id="cp_new_password" required>
+          </div>
+
+          <div class="md-form">
+            <label data-error="wrong" data-success="right">Re-enter New Password</label>
+            <span class="text-danger">*</span></label>
+            <input type="password" class="form-control validate" id="cp_re_new_password" required>
+          </div>
+
+          <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary btn-block z-depth-1a" name="signupbtn">SUBMIT</button>
+          </div>
+
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+
+
+
 <?php
 
 $sql = "SELECT org_name, organization_id FROM tbl_organization WHERE user_id = '".$_SESSION['admin_org']['user_id']."' AND status = '1'";
@@ -39,8 +88,8 @@ $opt1 .= "</select>";
                         <label data-error="wrong" data-success="right">Gender <span class="text-danger">*</span></label>
                         <select class='form-control' id="add_gender" required>
                             <option value="" selected hidden>Select Gender</option>
-                            <option value="1">Male</option>
-                            <option value="0">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
                         </select>
                     </div>
                     <div class="md-form">
@@ -114,8 +163,8 @@ $opt2 .= "</select>";
                         <label data-error="wrong" data-success="right">Gender <span class="text-danger">*</span></label>
                         <select class='form-control' id="edit_gender" required>
                             <option value="" selected hidden>Select Gender</option>
-                            <option value="1">Male</option>
-                            <option value="0">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
                         </select>
                     </div>
                     <div class="md-form">
@@ -160,6 +209,7 @@ $opt2 .= "</select>";
                 <div class="modal-body">
                     <span>are you sure do you want to remove member?</span>
                     <input type="hidden" name="" id="delete_id">
+                    <input type="hidden" name="" id="usern">
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
@@ -170,3 +220,49 @@ $opt2 .= "</select>";
 
     </div>
 </div>
+
+
+
+<!-- FILE UPLOAD -->
+<?php
+
+$sql = "SELECT org_name, organization_id FROM tbl_organization WHERE user_id = '".$_SESSION['admin_org']['user_id']."' AND status = '1'";
+$result = mysqli_query($db, $sql) or die("Bad SQL: $sql");
+
+$opt3 = "<select class='form-control' name='organization_id' id = 'organization_id' required>";
+$opt3 .= "<option value='' selected hidden>Select RSO</option>";
+while ($row = mysqli_fetch_assoc($result)) {
+    $opt3 .= "<option value='" . $row['organization_id'] . "'>" . $row['org_name'] . "</option>";
+}
+$opt3 .= "</select>";
+?>
+
+  <!------------------------------------- UPLOAD FILE-------------------------------------------------->
+  <div class="modal fade" id="upload_excel_modal">
+     <div class="modal-dialog">
+         <div class="modal-content">
+             <div class="modal-header text-center">
+                 <h5 class="modal-title" id="exampleModalLabel">Upload Excel File</h5>
+                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">×</span>
+                 </button>
+             </div>
+             <form id="upload_excel" enctype="multipart/form-data">
+                 <div class="modal-body">
+                 <div class="form-group">
+                    <?php
+                    echo $opt3;
+                    ?>
+                    <br>
+                    <input type="file" name="excel_1" id="excel_1" class="form-control"><br><br>
+                 </div>
+                 <div class="modal-footer">
+                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                     <button type="submit" class="btn btn-primary">Upload</button>
+                 </div>
+             </form>
+         </div>
+     </div>
+ </div>
+
+ 

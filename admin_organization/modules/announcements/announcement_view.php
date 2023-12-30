@@ -2,6 +2,7 @@
 include("../../../app/database.php");
 
 $announcements = array();
+$data = array();
 
 $query = "
 SELECT ann.*, org.org_name, org.user_id

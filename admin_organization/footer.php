@@ -111,6 +111,8 @@
 <script src="../../assets/includes/vendor/js/pdfmake.min.js"></script>
 <script src="../../assets/includes/vendor/js/vfs_fonts.js"></script>
 <script src="../../assets/includes/vendor/js/jszip.min.js"></script>
+<script src="../../assets/tinymce/tinymce.min.js"></script>
+		<script src="../../assets/tinymce/init-tinymce.min.js"></script>
 
 
 <!-- Page level custom scripts -->

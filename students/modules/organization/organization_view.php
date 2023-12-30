@@ -4,8 +4,10 @@ include("../../../app/database.php");
 $organization = array();
 
 $query = "
-SELECT * FROM tbl_organization
-WHERE organization_id = '".$_SESSION['student']['organization_id']."'
+SELECT org.* 
+FROM tbl_organization as org
+LEFT JOIN tbl_students_exists as ext ON ext.organization_id = org.organization_id
+WHERE ext.student_id_number = '".$_SESSION['student']['username']."'
 ORDER by org_name ASC
 ";
 
@@ -59,7 +61,9 @@ foreach($organization as $key => $value){
     <button class = 'btn btn-warning' title='View' onclick='view_details(".$value['organization_id'].")'><i class='fa fa-eye'></i></button>&nbsp;
     ";
 
-      $data['data'][] = array($value['org_name'],$value['date_inserted'], $button_details);
+    $link = "<a href='../../profile?orgID=".$value['organization_id']."'>".$value['org_name']."</a>";
+
+      $data['data'][] = array($link,$value['date_inserted'], $button_details);
     }
     
     echo json_encode($data);

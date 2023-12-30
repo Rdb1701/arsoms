@@ -100,6 +100,13 @@ if (!$_SESSION['admin_org']) {
       $result = mysqli_query($db, $query);
       if (mysqli_num_rows($result) > 0) {
       ?>
+
+       <!-- members sidebar -->
+       <li class="nav-item ">
+          <a class="nav-link" href="org_profile">
+            <i class="fas fa-home"></i>
+            <span class="menu-title">Organization Profile</span></a>
+        </li>
          <!-- members sidebar -->
         <li class="nav-item ">
           <a class="nav-link" href="member">
@@ -162,9 +169,9 @@ if (!$_SESSION['admin_org']) {
       <!-- END-->
 
       <li class="nav-item ">
-        <a class="nav-link" href="#" onclick="change_password()">
+        <a class="nav-link" href="users">
           <i class="fas fa-key"></i>
-          <span>Account</span></a>
+          <span>Officers</span></a>
       </li>
       
          <!-- Logout -->

@@ -2,6 +2,7 @@
 include("../../../app/database.php");
 
 $payments = array();
+$data = array();
 
 $query = "
 SELECT pay.*, ev.event_desc, stud.fname, stud.lname, ev.event_date, ev.last_event_date, stud.year_level

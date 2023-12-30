@@ -2,6 +2,7 @@
 include("../../../app/database.php");
 
 $payments = array();
+$data = array();
 
 $query = "
 SELECT pay.*, ev.event_desc, stud.fname, stud.lname, ev.event_date, ev.last_event_date, stud.year_level
@@ -9,7 +10,7 @@ FROM tbl_payment as pay
 LEFT JOIN tbl_events as ev ON ev.event_id = pay.event_id
 LEFT JOIN tbl_organization as org ON org.organization_id = ev.organization_id
 LEFT JOIN tbl_students as stud ON stud.student_id = pay.student_id
-WHERE pay.status = '0'
+WHERE pay.status = '0' and org.user_id = '".$_SESSION['admin_org']['user_id']."'
 ORDER BY stud.lname
 ";
 
@@ -31,12 +32,27 @@ if ($numRows > 0) {
           $status = '<span class="bg-danger text-white" style="padding: 3px 8px; border-radius: 5px;">Sanctioned</span>';
       }
 
+      $year_level = "";
+
+      if($row['year_level'] == 1){
+        $year_level = '<span class="text-dark" style="padding: 3px 8px; border-radius: 5px;">1st Year</span>';
+    }
+    if($row['year_level'] == 2){
+        $year_level = '<span class=" text-dark" style="padding: 3px 8px; border-radius: 5px;">2nd Year</span>';
+    }
+    if($row['year_level'] == 3){
+      $year_level = '<span class="text-dark" style="padding: 3px 8px; border-radius: 5px;">3rd Year</span>';
+    }
+    if($row['year_level'] == 4){
+      $year_level = '<span class="text-dark" style="padding: 3px 8px; border-radius: 5px;">4th Year</span>';
+    }
+
       $temp_arr['payment_id']    = $row['payment_id'];
       $temp_arr['fname']         = $row['fname'];
       $temp_arr['lname']         = $row['lname'];
       $temp_arr['fee']           = $row['fee'];
       $temp_arr['event_desc']    = $row['event_desc'];
-      $temp_arr['year_level']    = $row['year_level'];
+      $temp_arr['year_level']    = $year_level;
       $temp_arr['status']        = $status;
       $temp_arr['date_inserted'] = date('F d,Y', strtotime($row['date_inserted']));
       $temp_arr['event_date']       = date('F d', strtotime($row['event_date']));

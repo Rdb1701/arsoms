@@ -30,8 +30,9 @@ if($numRows > 0 ){
 
 //GET STUDENT
 $query_student = "
-SELECT * FROM tbl_students
-WHERE organization_id = '$organization_id'
+SELECT stud.* FROM tbl_students as stud
+LEFT JOIN tbl_students_exists as ext ON ext.student_id_number = stud.username
+WHERE ext.organization_id = '$organization_id'
 ";
 
 $result = $db->query($query_student);

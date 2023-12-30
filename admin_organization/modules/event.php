@@ -172,8 +172,6 @@ include('../footer.php');
 
                     }
                 }
-
-
             ]
         });
 
