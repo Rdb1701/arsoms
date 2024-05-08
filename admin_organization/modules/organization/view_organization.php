@@ -27,6 +27,12 @@ if ($numRows > 0) {
     if($row['status'] == 2){
         $status = '<span class="bg-danger text-white" style="padding: 3px 8px; border-radius: 5px;">Rejected</span>';
     }
+    if($row['status'] == 3){
+        $status = '<span class="bg-danger text-white" style="padding: 3px 8px; border-radius: 5px;">Expired Accreditation</span>';
+    }
+    if($row['status'] == 4){
+        $status = '<span class="bg-success text-white" style="padding: 3px 8px; border-radius: 5px;">Reacredited</span>';
+    }
 
     $active = "";
     if($row['isActive'] == 0){

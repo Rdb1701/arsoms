@@ -1,6 +1,6 @@
 <?php
 
-$sql = "SELECT org_name, organization_id FROM tbl_organization WHERE user_id = '".$_SESSION['admin_org']['user_id']."' AND status = '1'";
+$sql = "SELECT org_name, organization_id FROM tbl_organization WHERE user_id = '".$_SESSION['admin_org']['user_id']."' AND (status = '1' OR status = '4')";
 $result = mysqli_query($db, $sql) or die("Bad SQL: $sql");
 
 $opt1 = "<select class='form-control' name='type' id = 'add_rso' required>";
@@ -56,7 +56,7 @@ $opt1 .= "</select>";
 
 <?php
 
-$sql = "SELECT org_name, organization_id FROM tbl_organization WHERE user_id = '".$_SESSION['admin_org']['user_id']."' AND status = '1'";
+$sql = "SELECT org_name, organization_id FROM tbl_organization WHERE user_id = '".$_SESSION['admin_org']['user_id']."' AND (status = '1' OR status = '4')";
 $result = mysqli_query($db, $sql) or die("Bad SQL: $sql");
 
 $opt2 = "<select class='form-control' name='type' id = 'edit_rso' required>";

@@ -7,7 +7,7 @@ SELECT org.*, us.fname, us.lname, prof.description
  FROM tbl_organization as org
 LEFT JOIN tbl_users as us ON us.user_id = org.user_id
 LEFT JOIN tbl_organization_profile as prof ON prof.organization_id = org.organization_id
-WHERE org.status = 1
+WHERE (org.status = 1 OR org.status = 4) AND org.status != 3
 ORDER by org.date_inserted ASC
 ";
 

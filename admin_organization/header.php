@@ -4,6 +4,7 @@ if (!$_SESSION['admin_org']) {
   header('location: ../../login.php');
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -95,7 +96,7 @@ if (!$_SESSION['admin_org']) {
       SELECT org.*
       FROM tbl_organization as org
       LEFT JOIN tbl_users as us ON us.user_id = org.user_id
-      WHERE org.user_id = '" . $_SESSION['admin_org']['user_id'] . "' AND org.status = '1'
+      WHERE org.user_id = '" . $_SESSION['admin_org']['user_id'] . "' AND (org.status = '1' OR org.status = '4')
       ";
       $result = mysqli_query($db, $query);
       if (mysqli_num_rows($result) > 0) {
@@ -148,6 +149,7 @@ if (!$_SESSION['admin_org']) {
             <i class="fas fa-dollar-sign"></i>
             <span>Obligation Fees</span></a>
         </li>
+
         <li class="nav-item">
           <a class="nav-link" href="paid">
             <i class="fas fa-user-check"></i>
@@ -170,8 +172,13 @@ if (!$_SESSION['admin_org']) {
 
       <li class="nav-item ">
         <a class="nav-link" href="users">
-          <i class="fas fa-key"></i>
+          <i class="fas fa-users"></i>
           <span>Officers</span></a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="#" onclick="change_password()">
+          <i class="fas fa-key"></i>
+          <span>Changepass</span></a>
       </li>
       
          <!-- Logout -->

@@ -1,6 +1,6 @@
 <?php
 
-$sql = "SELECT org_name, organization_id FROM tbl_organization WHERE user_id = '" . $_SESSION['admin_org']['user_id'] . "' AND status = '1'";
+$sql = "SELECT org_name, organization_id FROM tbl_organization WHERE user_id = '" . $_SESSION['admin_org']['user_id'] . "' AND (status = '1' OR status = '4')";
 $result = mysqli_query($db, $sql) or die("Bad SQL: $sql");
 
 $opt2 = "<select class='form-control' name='edit_rso' id = 'edit_rso' required>";
@@ -218,7 +218,6 @@ $opt2 .= "</select>";
                             </div>
                         </div>
                     </div>
-
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -261,7 +260,7 @@ $opt2 .= "</select>";
     let countAccomplishment1 = 1;
     let countNew1 = 1;
 
-    function refresh(){
+    function refresh() {
         location.reload();
     }
 

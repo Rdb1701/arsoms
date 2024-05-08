@@ -59,6 +59,17 @@ include("../footer.php");
         $('#accept_modal').modal('show')
     }
 
+     //ACCEPT ORGANIZATIOn
+     function reacredit_organization(organization_id, email) {
+        $('#reaccept_id').val(organization_id);
+        $('#reaccept_email').val(email)
+        $('#accept_modal').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
+        $('#reaccept_modal').modal('show')
+    }
+
     //REJECT ORGANIZATION
     function reject_organization(organization_id, email) {
         $('#reject_id').val(organization_id);
@@ -315,6 +326,47 @@ include("../footer.php");
                         table.page(currentPageIndex).draw(false);
                     }, false);
                     $('#accept_modal').modal('hide');
+
+                } else {
+                    alert(res.res_message);
+                }
+            }).fail(function() {
+                console.log("FAIL");
+            })
+
+        })
+
+        //REACREDIT
+        //ACCEPTING ORGANIZATION
+        $('#reaccept_form').submit(function(e) {
+            e.preventDefault()
+
+            let organization_id = $('#reaccept_id').val()
+            let email = $('#reaccept_email').val()
+
+            $.ajax({
+                url: 'organization/organization_reacredit',
+                type: 'POST',
+                data: {
+                    organization_id: organization_id,
+                    email: email
+
+                },
+                dataType: 'JSON',
+                beforeSend: function() {
+                    $('#rebtn_approve').prop('disabled', true)
+                    // Show image container
+                    $("#reloader").show();
+                }
+            }).done(function(res) {
+                if (res.res_success == 1) {
+                    $("#reloader").hide();
+                    alert('Successfully Accepted');
+                    var currentPageIndex = table.page.info().page;
+                    table.ajax.reload(function() {
+                        table.page(currentPageIndex).draw(false);
+                    }, false);
+                    $('#reaccept_modal').modal('hide');
 
                 } else {
                     alert(res.res_message);

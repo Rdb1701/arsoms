@@ -55,6 +55,14 @@ $opt1 .= "</select>";
                         <label data-error="wrong" data-success="right">Purpose<span class="text-danger">*</span></label>
                         <input type="text" class="form-control validate" id="add_purpose" name ="add_purpose" required>
                     </div><br>
+                    <div class="md-form">
+                        <label data-error="wrong" data-success="right">Due Date<span class="text-danger">*</span></label>
+                        <input type="date" class="form-control validate" id="add_due_date" name ="add_due_date" required>
+                    </div><br>
+                    <!-- <div class="md-form">
+                        <label data-error="wrong" data-success="right">Resolution<span class="text-danger">*</span></label>
+                        <input type="file" name="file_upload" id="file_upload">
+                    </div><br> -->
                     <div class="md-form" >
                         <table class="table" id="populate_table">
                             <thead>

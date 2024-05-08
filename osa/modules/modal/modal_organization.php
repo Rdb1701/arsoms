@@ -61,6 +61,38 @@
 </div>
 
 
+<!------------------------------------- ACCEPT ORGANZIATION -------------------------------------------------->
+<div class="modal fade" tabindex="-1" role="dialog" id="reaccept_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Reacredit?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form id="reaccept_form">
+                <div class="modal-body">
+                    <span>Are you sure to Reacredit Application?</span>
+                    <input type="hidden" name="" id="reaccept_id">
+                    <input type="hidden" name="" id="reaccept_email">
+                </div>
+                <div class="modal-footer">
+                      <!-- Image loader -->
+                      <div id='reloader' style='display: none;'>
+                        <img src='../../assets/img/loader.gif' width="10%"><b>Sending Email, Please wait..</b>
+                    </div>
+                    <div class='reresponse'></div>
+                    <button class="btn btn-secondary" type="button"  data-dismiss="modal">Cancel</button>
+                    <button type="submit" id="rebtn_approve" class="btn btn-success">Accept</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
 <!------------------------------------- REJECT ORGANZIATION -------------------------------------------------->
 <div class="modal fade" tabindex="-1" role="dialog" id="reject_modal">
     <div class="modal-dialog">

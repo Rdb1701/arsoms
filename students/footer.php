@@ -84,6 +84,67 @@
   </div>
 </div>
 
+<!-- EDIT MEMBER -->
+<?php
+
+?>
+
+<!---------------------------- EDIT MEMBER ----------------------------->
+<div class="modal fade" tabindex="-1" role="dialog" id="list_edit_modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold">Edit Profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form_update">
+                <div class="modal-body">
+                    <div class="md-form">
+                    <input type="hidden" class="form-control validate" id="edit_student_id" disabled>
+                        <label data-error="wrong" data-success="right">ID Number <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control validate" id="edit_username" disabled>
+                    </div>
+                    <div class="md-form">
+                        <label data-error="wrong" data-success="right">First Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control validate" id="edit_fname" required>
+                    </div>
+                    <div class="md-form">
+                        <label data-error="wrong" data-success="right">Last Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control validate" id="edit_lname" required>
+                    </div>
+                    <div class="md-form">
+                        <label data-error="wrong" data-success="right">Gender <span class="text-danger">*</span></label>
+                        <select class='form-control' id="edit_gender" required>
+                            <option value="" selected hidden>Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div class="md-form">
+                        <label data-error="wrong" data-success="right">Year <span class="text-danger">*</span></label>
+                        <select class='form-control' id="edit_year" required>
+                            <option value="" selected hidden>Select year</option>
+                            <option value="1">1st Year</option>
+                            <option value="2">2nd Year</option>
+                            <option value="3">3rd Year</option>
+                            <option value="4">4th Year</option>
+                        </select>
+                    </div>
+                    <div class="md-form">
+                        <label data-error="wrong" data-success="right">Email</label>
+                        <input type="email" class="form-control validate" id="edit_email" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
 <!-- Bootstrap core JavaScript-->
 <!-- <script src="../../assets/vendor/jquery/jquery.min.js"></script> -->
 <script src="../../assets/includes/vendor/js/jquery-3.7.0.min.js"></script>
@@ -121,6 +182,36 @@
 
 </html>
 <script>
+
+function edit_student(student_id) {
+      $.ajax({
+        url: 'profile/student_edit',
+        type: 'POST',
+        data: {
+          student_id: student_id
+
+        },
+        dataType: 'JSON',
+        beforeSend: function() {
+
+        }
+      }).done(function(res) {
+
+        $("#edit_gender").val(res.gender);
+        $("#edit_student_id").val(res.student_id);
+        $("#edit_username").val(res.username);
+        $("#edit_lname").val(res.lname);
+        $("#edit_fname").val(res.fname);
+        $("#edit_email").val(res.email);
+        $("#edit_year").val(res.year_level);
+        $('#list_edit_modal').modal('show');
+
+      }).fail(function() {
+        console.log("FAIL");
+      })
+    }
+
+
   function change_password() {
     
     $('#change_password_modal').modal('show');
@@ -167,6 +258,8 @@
 
   });
 
+  
+
   $(document).ready(function() {
     $('#form_change_password').submit(function(e) {
       e.preventDefault();
@@ -197,6 +290,47 @@
       }
 
     });
+
+    //--------------------------------------------UPDATE Student---------------------------------------//
+    $('#form_update').on('submit', function(e) {
+        e.preventDefault();
+
+        let student_id = $('#edit_student_id').val();
+        let lname      = $('#edit_lname').val();
+        let fname      = $('#edit_fname').val();
+        let gender     = $('#edit_gender').val();
+        let year_level = $('#edit_year').val();
+        let email      = $('#edit_email').val();
+
+
+        $.ajax({
+          url: 'profile/student_update',
+          type: 'POST',
+          data: {
+            student_id: student_id,
+            fname: fname,
+            lname: lname,
+            gender: gender,
+            year_level: year_level,
+            email: email,
+          },
+          dataType: 'JSON',
+          beforeSend: function() {
+
+          }
+        }).done(function(res) {
+          if (res.res_success == 1) {
+            alert('Successfully Update Information');
+
+            $('#list_edit_modal').modal('hide');
+          } else {
+            alert(res.res_message);
+          }
+
+        }).fail(function() {
+          console.log('fail')
+        })
+      })
 
   });
 

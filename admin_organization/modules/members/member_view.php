@@ -63,20 +63,22 @@ if ($numRows > 0) {
 
 }
 
+foreach ($students as $key => $value) {
 
-foreach($students as $key => $value){
+  $numbering = $key + 1; // Add 1 to start numbering from 1
+  $button = "
+      <td class='text-center'>
+          <div class='d-flex justify-content-center order-actions'>
+              <button class='btn btn-primary' title='Edit' onclick='edit_member(" . $value['student_id'] . ")'><i class='fa fa-edit'></i></button>&nbsp;
+              <button class='btn btn-success' title='Edit' onclick='member_change(" . $value['student_id'] . ",\"" . $value['username'] . "\")'><i class='fa fa-key'></i></button>&nbsp;
+              <button class='btn btn-danger' title='Delete' onclick='delete_member(" . $value['organization_id'] . ",\"" . $value['username'] . "\")'><i class='fa fa-trash'></i></button>
+          </div>
+      </td>
+  ";
 
-     $button= "
-     <td class='text-center'>
-     <div class='d-flex justify-content-center order-actions'>
-     <button class = 'btn btn-primary' title='Edit'  onclick='edit_member(".$value['student_id'].")'><i class='fa fa-edit'></i></button>&nbsp;
-     <button class = 'btn btn-success' title='Edit'  onclick='member_change(".$value['student_id'].",\"".$value['username']."\")'><i class='fa fa-key'></i></button>&nbsp;
-     <button class = 'btn btn-danger'  title='Delete' onclick='delete_member(".$value['organization_id'].",\"".$value['username']."\")'><i class='fa fa-trash'></i></button>
-     </div>
-   </td>
-     ";
+  $data['data'][] = array($value['username'], $value['lname'] . ' ' . $value['fname'], $value['org_name'], $value['gender'], $value['year_level'], $value['email'], $button);
+}
 
-     $data['data'][] = array($value['username'], $value['fname'].' '.$value['lname'],$value['org_name'],$value['gender'],$value['year_level'], $value['email'],$button);
-   }
-   
-   echo json_encode($data);
+echo json_encode($data);
+
+   ?>

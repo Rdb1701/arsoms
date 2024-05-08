@@ -14,6 +14,7 @@ $event           =  mysqli_real_escape_string($db, $_POST['add_event']);
 $fee             =  mysqli_real_escape_string($db, $_POST['add_fee']);
 $purpose         =  mysqli_real_escape_string($db, $_POST['add_purpose']);
 $organization_id =  mysqli_real_escape_string($db, $_POST['add_organization']);
+$dute_date       =  mysqli_real_escape_string($db, $_POST['add_due_date']);
 $s_id            =  $_POST['s_id'];
 
 
@@ -59,14 +60,16 @@ for($count = 0; $count < count($s_id); $count++)
     fee,
     status,
     sanction_remarks,
-    date_inserted
+    date_inserted,
+    due_date
     )VALUES(
     '$event',
     '".$s_id[$count]."',
     '$fee',
     '0',
     '$purpose',
-    '".date("Y-m-d H:i:s")."'
+    '".date("Y-m-d H:i:s")."',
+    '$dute_date'
     )
     ";
 

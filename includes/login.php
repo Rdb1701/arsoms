@@ -65,6 +65,29 @@ if (count($errors) == 0) {
   
         }
 
+        $query = "
+        SELECT 
+        *
+        FROM tbl_users
+        WHERE
+        username = '$username'
+        AND password = '$password'
+        AND user_type_id = 2
+          ";
+    
+    
+          $result = mysqli_query($db, $query) or die ('Error in Inserting users in '. $query);
+          if (mysqli_num_rows($result) == 1) {
+            //log user in
+                   $res_success          = 1; 
+                  $row = mysqli_fetch_array($result);
+                  $_SESSION['admin_org']     = $row;
+      
+          }else{
+              array_push($errors, "Invalid Credentials");
+      
+            }
+
   }
 
   if($options == '3'){

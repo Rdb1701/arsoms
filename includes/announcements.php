@@ -5,7 +5,8 @@ $announcements = array();
 $query = "
 SELECT ann.*, org.org_name 
 FROM tbl_announcement as ann
-LEFT JOIN tbl_organization as org ON org.organization_id = ann.organization_id
+LEFT JOIN tbl_organization as org ON org.organization_id = ann.organization_id 
+WHERE org.status != 3
 ORDER BY ann.date_inserted DESC
 ";
 $result = mysqli_query($db, $query);

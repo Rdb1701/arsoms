@@ -6,7 +6,7 @@ $query = "
 SELECT ev.*, org.org_name
 FROM tbl_events as ev
 LEFT JOIN tbl_organization as org ON org.organization_id = ev.organization_id
-WHERE ev.isActive = '1' AND (ev.event_date < '".date("Y-m-d H:i:s")."')
+WHERE ev.isActive = '1' AND (ev.event_date < '".date("Y-m-d H:i:s")."') AND org.status != 3
 ORDER BY ev.event_date DESC
 ";
 

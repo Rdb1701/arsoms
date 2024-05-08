@@ -55,6 +55,7 @@ if ($numRows > 0) {
       $temp_arr['year_level']    = $year_level;
       $temp_arr['status']        = $status;
       $temp_arr['date_inserted'] = date('F d,Y', strtotime($row['date_inserted']));
+      $temp_arr['due_date']         = date('F d,Y', strtotime($row['due_date']));
       $temp_arr['event_date']       = date('F d', strtotime($row['event_date']));
       $temp_arr['last_event_date']  = date('d, Y', strtotime($row['last_event_date']));
       
@@ -73,7 +74,7 @@ foreach($payments as $key => $value){
   </td>
     ";
 
-    $data['data'][] = array($value['fname'].' '.$value['lname'],$value['year_level'],$value['event_desc'],$value['event_date'].' - '.$value['last_event_date'],'₱ '.$value['fee'],$value['status'],$button);
+    $data['data'][] = array($value['fname'].' '.$value['lname'],$value['year_level'],$value['event_desc'],$value['event_date'].' - '.$value['last_event_date'],$value['due_date'],'₱ '.$value['fee'],$value['status'],$button);
   }
   
   echo json_encode($data);

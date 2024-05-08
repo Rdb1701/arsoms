@@ -134,7 +134,6 @@ date_default_timezone_set('Asia/Manila');
 </div>
 
 
-
       <!-- SIGN IN MODAL -->
 
       <div class="modal fade" id="loginModal">
@@ -169,6 +168,7 @@ date_default_timezone_set('Asia/Manila');
                 <button type="submit" class="btn btn-primary btn-block z-depth-1a" id="signinbtn">Sign In</button>
               </div>
             </form>
+            <a href="#forgot_pass" data-bs-toggle="modal" class="form-control" style="text-decoration: none;">Forgot password?</a>
           </div>
         </div>
       </div>
@@ -224,8 +224,33 @@ date_default_timezone_set('Asia/Manila');
     </div>
     </div>
 
+      <!------------------------------------- Forgot Password------------------------------------------------->
+  <div class="modal fade" id="forgot_pass">
+     <div class="modal-dialog">
+         <div class="modal-content">
+             <div class="modal-header text-center">
+                 <h5 class="modal-title" id="exampleModalLabel">Forgot Password?</h5>
+                 <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">×</span>
+                 </button>
+             </div>
+             <form id="forgot_pass">
+                 <div class="modal-body">
+                 <div class="form-group">
+                    <br>
+                   <input type="email" id="forgot_pass_email" class="form-control" placeholder="Enter your Email" required>
+                 </div>
+                 <div class="modal-footer">
+                     <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                     <button type="submit" class="btn btn-primary" id='btn_forgot'>Submit</button>
+                 </div>
+             </form>
+         </div>
+     </div>
+ </div>
 
     <script src="assets/js/jquery-3.4.1.min.js"></script>
+    <script src="assets/js/sweetalert.min.js"></script>
     <script src="src/bootstrap/bootstrap.bundle.min.js" charset="utf-8"></script>
   </body>
 
@@ -401,6 +426,36 @@ date_default_timezone_set('Asia/Manila');
 
 
     })
+
+    $('#forgot_pass').submit(function(e){
+      e.preventDefault();
+
+    let email =   $('#forgot_pass_email').val()
+
+    $.ajax({
+          url: 'includes/forgot_pass',
+          type: 'POST',
+          data: {
+              email : email
+          },
+          dataType: 'JSON',
+          beforeSend: function() {
+          }
+        }).done(function(res) {
+
+          if (res.res_success == 1) {
+            swal("We have sent and email!", "please check you email", "success");
+            $('#forgot_pass').modal('hide')
+          } else {
+            swal("Oops...", res.res_message, "error");
+          }
+
+        }).fail(function() {
+          console.log('FAIL!');
+        })
+
+    })
+
 
 
 

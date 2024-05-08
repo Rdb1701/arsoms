@@ -53,8 +53,8 @@ if (!$_SESSION['student']) {
   <link rel="stylesheet" href="../../assets/includes/vendor/css/buttons.bootstrap4.min.css">
   <link rel="stylesheet" href="../../assets/includes/vendor/css/dataTables.bootstrap4.min.css">
 
-    <!-- METIS MENU -->
- <link rel="stylesheet" href="../../assets/includes/metismenu/css/metisMenu.min.css">
+  <!-- METIS MENU -->
+  <link rel="stylesheet" href="../../assets/includes/metismenu/css/metisMenu.min.css">
   <link rel="shortcut icon" href="../../assets/img/logo.png" type="image/x-icon">
 
 </head>
@@ -78,36 +78,36 @@ if (!$_SESSION['student']) {
       <!-- Divider -->
       <hr class="sidebar-divider">
       <!-- Heading -->
-      <ul class="metismenu" id = "menu" style="list-style: none; padding-left: 0; "> 
-      <div class="sidebar-heading">
-        STUDENT
-      </div>
-      <!-- Tables Buttons -->
-      <li class="nav-item ">
-        <a class="nav-link" href="org">
-          <i class="fas fa-campground"></i>
-          <span>Organization</span></a>
-      </li>
-  
-      <li class="nav-item ">
-        <a class="nav-link" href="payment">
-          <i class="fas fa-money-bill"></i>
-          <span>Obligation Fees</span></a>
-      </li>
-      <li class="nav-item ">
-        <a class="nav-link" href="#" onclick="change_password()">
-          <i class="fas fa-key"></i>
-          <span>Changepass</span></a>
-      </li>
+      <ul class="metismenu" id="menu" style="list-style: none; padding-left: 0; ">
+        <div class="sidebar-heading">
+          STUDENT
+        </div>
+        <!-- Tables Buttons -->
+        <li class="nav-item ">
+          <a class="nav-link" href="org">
+            <i class="fas fa-campground"></i>
+            <span>Organization</span></a>
+        </li>
 
-         <!-- Logout -->
-      <li class="nav-item">
-        <a class="nav-link" href="../../includes/logout_osa">
-          <i class="fas fa-sign-out-alt"></i>
-          <span>Logout</span></a>
-      </li>
+        <li class="nav-item ">
+          <a class="nav-link" href="payment">
+            <i class="fas fa-money-bill"></i>
+            <span>Obligation Fees</span></a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" href="#" onclick="change_password()">
+            <i class="fas fa-key"></i>
+            <span>Changepass</span></a>
+        </li>
 
-    </ul>
+        <!-- Logout -->
+        <li class="nav-item">
+          <a class="nav-link" href="../../includes/logout_osa">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span></a>
+        </li>
+
+      </ul>
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
@@ -115,7 +115,7 @@ if (!$_SESSION['student']) {
       <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
       </div>
-      </ul>
+    </ul>
 
     <!-- End of Sidebar -->
 
@@ -127,37 +127,33 @@ if (!$_SESSION['student']) {
 
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+    <!-- Sidebar Toggle (Topbar) -->
+    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+        <i class="fa fa-bars"></i>
+    </button>
 
-          <!-- Sidebar Toggle (Topbar) -->
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-          </button>
+    <!-- Topbar Navbar -->
+    <ul class="navbar-nav ml-auto">
 
-          <!-- Topbar Navbar -->
-          <ul class="navbar-nav ml-auto">
+        <div class="topbar-divider d-none d-sm-block"></div>
 
-            <div class="topbar-divider d-none d-sm-block"></div>
-
-            <!-- Nav Item - User Information -->
-            <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <!-- Nav Item - User Information -->
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION['student']['fname'] ?> <?php echo $_SESSION['student']['lname'] ?></span>
-                <img class="img-profile rounded-circle" src="../../assets/img/avatar.jpg" <?php
-                                                                                          // if( 'Male'=='Male'){
-                                                                                          //   echo 'src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTS0rikanm-OEchWDtCAWQ_s1hQq1nOlQUeJr242AdtgqcdEgm0Dg"';
-                                                                                          // }else{
-                                                                                          //   echo 'src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNngF0RFPjyGl4ybo78-XYxxeap88Nvsyj1_txm6L4eheH8ZBu"';
-                                                                                          // }
-                                                                                          ?>>
+                <img class="img-profile rounded-circle" src="../../assets/img/avatar.jpg">
+            </a>
+            <!-- Dropdown - User Information -->
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#" onclick="edit_student(<?php echo $_SESSION['student']['student_id']; ?>)">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Profile
+                </a>
+            </div>
+        </li>
+    </ul>
+</nav>
+      <!-- End of Topbar -->
 
-              </a>
-
-            </li>
-
-          </ul>
-
-        </nav>
-        <!-- End of Topbar -->
-
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
+      <!-- Begin Page Content -->
+      <div class="container-fluid">

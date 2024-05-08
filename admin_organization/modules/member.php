@@ -1,6 +1,19 @@
 <?php
 include("../header.php");
 ?>
+
+<?php
+
+$sql = "SELECT org_name, organization_id FROM tbl_organization WHERE user_id = '" . $_SESSION['admin_org']['user_id'] . "' AND (status = '1' OR status = '4')";
+$result = mysqli_query($db, $sql) or die("Bad SQL: $sql");
+
+$opt1 = "<select class='btn btn-outline-success' name='type' id = 'rso_1' required>";
+$opt1 .= "<option value='' selected hidden>Select RSO</option>";
+while ($row = mysqli_fetch_assoc($result)) {
+  $opt1 .= "<option value='" . $row['organization_id'] . "'>" . $row['org_name'] . "</option>";
+}
+$opt1 .= "</select>";
+?>
 <div class="page-heading">
   <h3 class="">Members</h3>
 </div>
@@ -10,6 +23,21 @@ include("../header.php");
   <button onclick="add_excel()" data-toggle="modal" class="btn btn-success" type="button"><i class="fa fa-file-excel"></i> Excel File</button>
   <a href="../../assets/template/member.xlsx" class="btn btn-success"><i class="fa fa-file-excel"></i> Excel Template</a>
   <br><br>
+  <span>FILTER:</span>
+  <div class="d-flex">
+    <form id="form_select">
+      <?php echo $opt1; ?>
+      <select class='btn btn-outline-success' id="year_levell" required>
+        <option value="" selected hidden>Select year</option>
+        <option value="1">1st Year</option>
+        <option value="2">2nd Year</option>
+        <option value="3">3rd Year</option>
+        <option value="4">4th Year</option>
+      </select>
+      <button type="button" class="btn btn-primary" onclick="member_search()"><i class="fa fa-magnifying-glass"></i> Search</button>
+    </form>
+    <br><br>
+  </div>
   <div class="page-content ttable">
     <div class="card shadow mb-4">
       <div class="card-body">
@@ -17,6 +45,7 @@ include("../header.php");
           <table class="table text-dark" id="myTable" width="100%" cellspacing="0">
             <thead>
               <tr>
+                <th class="text-center">No.</th>
                 <th class="text-center">ID Number</th>
                 <th class="text-center">Member Name</th>
                 <th class="text-center">Organization</th>
@@ -45,6 +74,23 @@ include("../header.php");
 
 
   <script>
+    function member_search(subject_id) {
+      let year_level = $('#year_levell').val()
+      let rso = $('#rso_1').val();
+
+      let data = '';
+      data += 'year_level=' + year_level + '&';
+      data += 'rso=' + rso;
+
+      if (year_level != '' && rso != '') {
+        window.location.href = "member_search?" + data;
+      } else {
+        alert("Please Input Filter")
+      }
+    }
+
+
+
     function add_excel() {
       $('#upload_excel_modal').modal({
         backdrop: 'static',
@@ -113,146 +159,112 @@ include("../header.php");
       //   .appendTo('#myTable thead');
 
       var table = $('#myTable').DataTable({
-
         ajax: 'members/member_view', // API endpoint to fetch data
         columns: [{
+            data: null,
+            className: "text-center",
+            render: function(data, type, row, meta) {
+              // Calculate the index based on the current page and page length
+              var page = table.page.info().page;
+              var length = table.page.info().length;
+              var index = (page * length) + meta.row + 1;
+              return index;
+            }
+          },
+          {
             data: [0],
-            "className": "text-center"
+            className: "text-center"
           },
           {
             data: [1],
-            "className": "text-center"
+            className: "text-center"
           },
           {
             data: [2],
-            "className": "text-center"
+            className: "text-center"
           },
           {
             data: [3],
-            "className": "text-center"
-
+            className: "text-center"
           },
           {
             data: [4],
-            "className": "text-center"
-
+            className: "text-center"
           },
           {
             data: [5],
-            "className": "text-center"
+            className: "text-center"
           },
           {
             data: [6],
-            "className": "text-center"
-          }
+            className: "text-center"
+          },
+
         ],
-        dom: "Bfrtip",
-        buttons: [{
-            extend: "pageLength",
-            className: "btn-sm btn-success",
-          },
+        // dom: "Bfrtip",
+        // buttons: [{
+        //     extend: "pageLength",
+        //     className: "btn-sm btn-success",
+        //   },
+        //   {
+        //     extend: "copy",
+        //     className: "btn-sm btn-success",
+        //     exportOptions: {
+        //       columns: [0, 1, 2, 3, 4, 5, 6]
+        //     }
+        //   },
+        //   {
+        //     extend: "csv",
+        //     className: "btn-sm btn-success",
+        //     exportOptions: {
+        //       columns: [0, 1, 2, 3, 4, 5, 6]
+        //     }
+        //   },
+        //   {
+        //     extend: "excel",
+        //     className: "btn-sm btn-success",
+        //     exportOptions: {
+        //       columns: [0, 1, 2, 3, 4, 5, 6]
+        //     }
+        //   },
+        //   {
+        //     extend: "pdfHtml5",
+        //     className: "btn-sm btn-success",
+        //     exportOptions: {
+        //       columns: [0, 1, 2, 3, 4, 5, 6]
+        //     }
+        //   },
+        //   {
+        //     extend: "print",
+        //     className: "btn-sm btn-success",
+        //     title: '.',
+        //     exportOptions: {
+        //       columns: [0, 1, 2, 3, 4, 5, 6]
+        //     },
+        //     message: '<img src="../../assets/img/logo.png" height="100px" width="100px" style="position: absolute;top:0;left:50px;"><center><h4 style="margin-top:-40px;">REPUBLIC OF THE PHILIPPINES</h4>\
+        //     <h6>AGUSAN DEL SUR STATE COLLEGE OF AGRICULTURE AND TECHNOLOGY</h6>\
+        //     <h6>BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY</h6>\
+        //     </center><br>\
+        //     <center>STUDENT ORGANIZATION MEMBERS</center><br>\
+        //     ',
+        //     customize: function(win) {
+        //       $(win.document.body).find('table').append('<br><br/><br><br><br><h4 class="">Noted by:</h4><br><br><br><br><br><h4 class="">Prepared by:</h4>');
+        //     }
 
-          {
-            extend: "copy",
-            className: "btn-sm btn-success",
-            exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5]
-            }
-          },
-          {
-            extend: "csv",
-            className: "btn-sm btn-success",
-            exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5]
-            }
-          },
-          {
-            extend: "excel",
-            className: "btn-sm btn-success",
-            exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5]
-            }
-          },
-          {
-            extend: "pdfHtml5",
-            className: "btn-sm btn-success",
-            exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5]
-            }
-          },
-          {
-            extend: "print",
-            className: "btn-sm btn-success",
-            title: '.',
-            exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5]
-            },
-            message: '<img src="../../assets/img/logo.png" height="100px" width="100px" style="position: absolute;top:0;left:50px;"><center><h4 style="margin-top:-40px;">REPUBLIC OF THE PHILIPPINES</h4>\
-							<h6>AGUSAN DEL SUR STATE COLLEGE OF AGRICULTURE AND TECHNOLOGY</h6>\
-							<h6>BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY</h6>\
-							</center><br>\
-              <center>STUDENT ORGANIZATION MEMBERS</center>',
-            customize: function(win) {
-              $(win.document.body).find('table').append('<br<br/><br><br><br><h4 class="">Noted by:</h4><br><br><br><br><br><h4 class="">Prepared by:</h4>');
-
-            }
-          }
-        ]
-
-        // orderCellsTop: true,
-        // fixedHeader: true,
-        // initComplete: function() {
-        //   var api = this.api();
-
-        //   // For each column
-        //   api
-        //     .columns()
-        //     .eq(0)
-        //     .each(function(colIdx) {
-        //       // Set the header cell to contain the input element
-        //       var cell = $('.filters th').eq(
-        //         $(api.column(colIdx).header()).index()
-        //       );
-        //       var title = $(cell).text();
-        //       $(cell).html('<input type="text" placeholder="' + title + '" />');
-
-        //       // On every keypress in this input
-        //       $(
-        //           'input',
-        //           $('.filters th').eq($(api.column(colIdx).header()).index())
-        //         )
-        //         .off('keyup change')
-        //         .on('change', function(e) {
-        //           // Get the search value
-        //           $(this).attr('title', $(this).val());
-        //           var regexr = '({search})'; //$(this).parents('th').find('select').val();
-
-        //           var cursorPosition = this.selectionStart;
-        //           // Search the column for that value
-        //           api
-        //             .column(colIdx)
-        //             .search(
-        //               this.value != '' ?
-        //               regexr.replace('{search}', '(((' + this.value + ')))') :
-        //               '',
-        //               this.value != '',
-        //               this.value == ''
-        //             )
-        //             .draw();
-        //         })
-        //         .on('keyup', function(e) {
-        //           e.stopPropagation();
-
-        //           $(this).trigger('change');
-        //           $(this)
-        //             .focus()[0]
-        //             .setSelectionRange(cursorPosition, cursorPosition);
-        //         });
-        //     });
-        // },
+        //   }
+        // ]
       });
 
-
+      // Event listener for when the table is redrawn
+      table.on('draw', function() {
+        // Update the first column to display dynamic values
+        table.column(0, {
+          search: 'applied',
+          order: 'applied'
+        }).nodes().each(function(cell, i) {
+          cell.innerHTML = i + 1;
+        });
+      });
 
 
       // <---------------------------- ADD MEMBER SUMBIT ------------------------------------->
@@ -429,47 +441,47 @@ include("../header.php");
       })
 
 
-       // -----------------------CHANGE PASSWORD ----------------------------- //
-       $('#d_form_cp').on('submit', function(e) {
-            e.preventDefault();
+      // -----------------------CHANGE PASSWORD ----------------------------- //
+      $('#d_form_cp').on('submit', function(e) {
+        e.preventDefault();
 
-            let student_id        = $('#cp_id').val();
-            let new_password    = $('#cp_new_password').val()
-            let re_new_password = $('#cp_re_new_password').val()
+        let student_id = $('#cp_id').val();
+        let new_password = $('#cp_new_password').val()
+        let re_new_password = $('#cp_re_new_password').val()
 
-            if (new_password == '' || re_new_password == '') {
-                alert('Please input Password')
-            } else if (new_password != re_new_password) {
-                alert('Password do not match!')
+        if (new_password == '' || re_new_password == '') {
+          alert('Please input Password')
+        } else if (new_password != re_new_password) {
+          alert('Password do not match!')
 
-            } else if (new_password == re_new_password) {
+        } else if (new_password == re_new_password) {
 
-                $.ajax({
-                    url: 'members/member_changepass',
-                    type: 'POST',
-                    data: {
-                      student_id        : student_id,
-                        new_password    : new_password,
-                        re_new_password : re_new_password,
-                    },
-                    dataType: 'JSON',
-                    beforeSend: function() {
-
-                    }
-                }).done(function(res) {
-                    if (res.res_success == 1) {
-                        alert('Password Changed!');
-                        $('#changepassword_modal').modal('hide');
-                    } else {
-                        alert('Invalid Password!');
-
-                    }
-                })
+          $.ajax({
+            url: 'members/member_changepass',
+            type: 'POST',
+            data: {
+              student_id: student_id,
+              new_password: new_password,
+              re_new_password: re_new_password,
+            },
+            dataType: 'JSON',
+            beforeSend: function() {
 
             }
+          }).done(function(res) {
+            if (res.res_success == 1) {
+              alert('Password Changed!');
+              $('#changepassword_modal').modal('hide');
+            } else {
+              alert('Invalid Password!');
+
+            }
+          })
+
+        }
 
 
-        })
+      })
 
 
       //document ready
