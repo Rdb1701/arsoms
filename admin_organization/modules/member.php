@@ -74,7 +74,7 @@ $opt1 .= "</select>";
 
 
   <script>
-    function member_search(subject_id) {
+    function member_search() {
       let year_level = $('#year_levell').val()
       let rso = $('#rso_1').val();
 

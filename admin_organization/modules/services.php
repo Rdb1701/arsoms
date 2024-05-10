@@ -1,27 +1,16 @@
 <?php
 include('../header.php');
 ?>
-<?php
-$sql = "SELECT * FROM tbl_organization
-WHERE user_id = '" . $_SESSION['admin_org']['user_id'] . "'";
-$result = mysqli_query($db, $sql) or die("Bad SQL: $sql");
-
-$opt_1 = "<select class='btn btn-outline-success' id = 'add_organizationn' name='add_organizationn' required>";
-$opt_1 .= "<option value='' selected hidden>Select Organization</option>";
-while ($row = mysqli_fetch_assoc($result)) {
-    $opt_1 .= "<option value='" . $row['organization_id'] . "'>" . $row['org_name'] . "</option>";
-}
-$opt_1 .= "</select>";
-?>
 
 <div class="page-heading">
-    <h3 class="">Monetary Sanctioned</h3>
+    <h3 class="">Services Sanctioned</h3>
 </div>
 <br>
 <div>
     <button onclick="add_sanction()" data-toggle="modal" class="btn btn-primary" type="button"><i class="fa fa-user-times"></i> Sanctioned a Student</button>
-    <a href="services" class="btn" style="float: right; border: 1px solid gray;">Services</a>
+    <a href="sanctioned" class="btn" style="float: right; border: 1px solid gray;">Monetary</a>
 </div><br>
+
 <div class="page-content ttable">
     <div class="card shadow mb-4">
         <div class="card-body">
@@ -33,8 +22,8 @@ $opt_1 .= "</select>";
                             <th class="text-center">Student Name</th>
                             <th class="text-center">Year Level</th>
                             <th class="text-center">Event Name</th>
-                            <th class="text-center">Date of Event</th>
-                            <th class="text-center">Sanction Fee</th>
+                            <th class="text-center">Service</th>
+                            <th class="text-center">Status</th>
                             <th class="text-center">Remarks</th>
                             <th class="text-center">Action</th>
                         </tr>
@@ -50,29 +39,12 @@ $opt_1 .= "</select>";
 
 
 <?php
-include('modal/modal_sanction.php');
+include('modal/modal_services.php');
 include('../footer.php');
 ?>
 
 
 <script>
-    function paid_search() {
-        let event = $('#add_eventt').val()
-        let rso = $('#add_organizationn').val();
-        let year_level = $('#year_leveel').val();
-
-        let data = '';
-        data += 'year_level=' + year_level + '&';
-        data += 'rso=' + rso + '&';
-        data += 'event=' + event;
-
-        if (year_level != '' && rso != '' && event != '') {
-            window.location.href = "sanction_search?" + data;
-        } else {
-            alert("Please Input Filter")
-        }
-    }
-
     function add_sanction() {
         $('#add_pmodal').modal({
             backdrop: 'static',
@@ -82,13 +54,13 @@ include('../footer.php');
 
     }
 
-    function send_receipt(payemnt_id) {
-        $('#send_id').val(payemnt_id);
+    function send_receipt(service_id) {
+        $('#send_id').val(service_id);
         $('#send_modal').modal('show');
     }
 
-    function delete_payment(payment_id) {
-        $('#delete_id').val(payment_id);
+    function delete_payment(service_id) {
+        $('#delete_id').val(service_id);
         $('#delete_modal').modal('show');
     }
 
@@ -130,7 +102,11 @@ include('../footer.php');
                     table += '<tr>' +
                         '<td class="text-center"><input type="checkbox" class= "checkItem" value = "' + value.student_id + '" name="s_id[]"</td>' +
                         '<td class="text-center">' + value.fname + ' ' + value.lname + '</td>' +
+
+
                         '<tr>'
+
+
                     $('#sanction_table').html(table)
                 })
 
@@ -147,7 +123,7 @@ include('../footer.php');
     $(document).ready(function() {
 
         var table = $('#myTable').DataTable({
-            ajax: 'sanction/sanction_view', // API endpoint to fetch data
+            ajax: 'sanction_service/sanction_service_view', // API endpoint to fetch data
             columns: [{
                     data: null,
                     className: "text-center",
@@ -159,7 +135,7 @@ include('../footer.php');
                         return index;
                     }
                 },
-
+                
                 {
                     data: [0],
                     "className": "text-center"
@@ -189,11 +165,10 @@ include('../footer.php');
                     "className": "text-center"
                 }
 
+
             ],
             dom: "Bfrtip",
-            buttons: [
-
-                {
+            buttons: [{
                     extend: "pageLength",
                     className: "btn-sm btn-success"
                 },
@@ -201,28 +176,28 @@ include('../footer.php');
                     extend: "copy",
                     className: "btn-sm btn-success",
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6]
+                        columns: [0, 1, 2, 3, 4, 5]
                     }
                 },
                 {
                     extend: "csv",
                     className: "btn-sm btn-success",
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6]
+                        columns: [0, 1, 2, 3, 4, 5]
                     }
                 },
                 {
                     extend: "excel",
                     className: "btn-sm btn-success",
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6]
+                        columns: [0, 1, 2, 3, 4, 5]
                     }
                 },
                 {
                     extend: "pdfHtml5",
                     className: "btn-sm btn-success",
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6]
+                        columns: [0, 1, 2, 3, 4, 5]
                     }
                 },
                 {
@@ -230,10 +205,11 @@ include('../footer.php');
                     className: "btn-sm btn-success",
                     title: '.',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6]
+                        columns: [0, 1, 2, 3, 4, 5]
                     },
                     message: '<img src="../../assets/img/logo.png" height="100px" width="100px" style="position: absolute;top:0;left:50px;"><center><h4 style="margin-top:-40px;">REPUBLIC OF THE PHILIPPINES</h4>\
 							<h6>AGUSAN DEL SUR STATE COLLEGE OF AGRICULTURE AND TECHNOLOGY</h6>\
+							<h6>BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY</h6>\
 							</center><br>\
               <center>SANCTIONED STUDENTS</center><br>',
                     customize: function(win) {
@@ -243,19 +219,7 @@ include('../footer.php');
                 }
             ]
         });
-        // $('#add_organizationn').on('change', function() {
-        //     let organization_id = $("#add_organizationn option:selected").val();
-        //     $.ajax({
-        //       type: "POST",
-        //       url: "payments/payment_change_org",
-        //       dataType: 'html',
-        //       data: {
-        //         organization_id: organization_id
-        //       }
-        //     }).done(function(data) {
-        //       $('#add_eventt').html(data);
-        //     });
-        //   });
+
 
         //ADD Sanction
         // $('#form_payment_p').on('submit', function(e) {
@@ -310,7 +274,7 @@ include('../footer.php');
             let payment_id = $('#delete_id').val()
 
             $.ajax({
-                url: 'payments/payment_delete',
+                url: 'sanction_service/sanction_delete',
                 type: 'POST',
                 data: {
                     payment_id: payment_id
@@ -346,7 +310,7 @@ include('../footer.php');
             let payment_id = $('#send_id').val()
 
             $.ajax({
-                url: 'sanction/sanction_send',
+                url: 'sanction_service/sanction_approve',
                 type: 'POST',
                 data: {
                     payment_id: payment_id
@@ -384,7 +348,7 @@ include('../footer.php');
             if ($('.checkItem:checked').length > 0) {
 
                 $.ajax({
-                    url: 'sanction/sanction_add_fee',
+                    url: 'sanction_service/sanction_add_service',
                     type: 'POST',
                     data: $(this).serialize(),
                     dataType: 'JSON',
@@ -397,6 +361,10 @@ include('../footer.php');
                     if (res.res_success == 1) {
                         $("#loader").hide();
                         alert('Successfully Added!');
+                        var currentPageIndex = table.page.info().page;
+                        table.ajax.reload(function() {
+                            table.page(currentPageIndex).draw(false);
+                        }, false);
                         $('#add_pmodal').modal('hide');
 
                     } else {

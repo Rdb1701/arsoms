@@ -95,6 +95,16 @@ if (!$_SESSION['student']) {
             <span>Obligation Fees</span></a>
         </li>
         <li class="nav-item ">
+          <a class="nav-link" href="services">
+            <i class="fas fa-cog"></i>
+            <span>Services Sanction</span></a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" href="resolution">
+            <i class="fas fa-book"></i>
+            <span>Resolution</span></a>
+        </li>
+        <li class="nav-item ">
           <a class="nav-link" href="#" onclick="change_password()">
             <i class="fas fa-key"></i>
             <span>Changepass</span></a>

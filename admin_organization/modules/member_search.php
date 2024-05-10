@@ -99,8 +99,8 @@ include "members/member_search_view.php";
             </center><br>\
             <center>ORGANIZATION MEMBERS</center><br>\
             <span class= "font-weight-bold">FILTER:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span></span><br>\
-            <span class= "font-weight-bold">Organization:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><?php echo $org_name; ?></span><br>\
-            <span class= "font-weight-bold">Section:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><?php echo $year; ?></span><br><br>\
+            <span class= "font-weight-bold">Organization:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><?php echo $org_name ? $org_name : 'No Data Found'; ?></span><br>\
+            <span class= "font-weight-bold">Section:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><?php echo $year ? $year : 'No Data Found'; ?></span><br><br>\
                            ',
                     customize: function(win) {
                         $(win.document.body).find('table').append('<br><br/><br><br><br><h4 class="">Noted by:</h4><br><br><br><br><br><h4 class="">Prepared by:</h4>');

@@ -24,7 +24,7 @@ $opt2 .= "</select>";
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title font-weight-bold">Sanction Fee</h5>
+                <h5 class="modal-title font-weight-bold">Sanction Service</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -42,8 +42,8 @@ $opt2 .= "</select>";
 
                     </div>
                     <div class="md-form">
-                        <label data-error="wrong" data-success="right">Sanction Fee<span class="text-danger">*</span></label>
-                        <input type="number" class="form-control validate" id="add_fee_p" name = "add_fee_p" required>
+                        <label data-error="wrong" data-success="right">Service<span class="text-danger">*</span></label>
+                        <input type="texr" class="form-control validate" id="add_fee_p" name = "add_fee_p" required>
                     </div>
                     <div class="md-form">
                         <label data-error="wrong" data-success="right">Sanction Remarks<span class="text-danger">*</span></label>
@@ -110,7 +110,7 @@ $opt2 .= "</select>";
             </div>
             <form id="send_form">
                 <div class="modal-body">
-                    <span>are you sure do you want to Send Receipt?</span>
+                    <span>are you sure the student is done with the Sanction Service?</span>
                     <input type="hidden" name="" id="send_id">
                 </div>
                 <div class="modal-footer">

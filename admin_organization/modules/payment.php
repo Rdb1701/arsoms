@@ -1,6 +1,18 @@
 <?php
 include('../header.php');
 ?>
+<?php
+$sql = "SELECT * FROM tbl_organization
+WHERE user_id = '" . $_SESSION['admin_org']['user_id'] . "'";
+$result = mysqli_query($db, $sql) or die("Bad SQL: $sql");
+
+$opt_1 = "<select class='btn btn-outline-success' id = 'add_organizationn' name='add_organizationn' required>";
+$opt_1 .= "<option value='' selected hidden>Select Organization</option>";
+while ($row = mysqli_fetch_assoc($result)) {
+  $opt_1 .= "<option value='" . $row['organization_id'] . "'>" . $row['org_name'] . "</option>";
+}
+$opt_1 .= "</select>";
+?>
 
 <div class="page-heading">
   <h3 class="">Obligation Fee</h3>
@@ -18,8 +30,27 @@ include('../header.php');
   <?php } else { ?>
     <!-- <button onclick="add_one_fee()" data-toggle="modal" class="btn btn-primary" type="button"><i class="fa fa-user-plus"></i> Add Obligation Fee</button> -->
   <?php } ?>
-
+  <a href="resolution" class="btn" style="float: right; border: 1px solid gray;">Resolution</a>
 </div><br>
+<span>FILTER:</span>
+  <div class="d-flex">
+    <form id="form_select">
+      <?php echo $opt_1; ?>
+
+      <select class="btn btn-outline-success" id="add_eventt" required name="add_event">
+        <option value='' selected hidden>Select Event</option>
+      </select>
+      <select class='btn btn-outline-success' id="year_leveel" required>
+        <option value="" selected hidden>Select year</option>
+        <option value="1">1st Year</option>
+        <option value="2">2nd Year</option>
+        <option value="3">3rd Year</option>
+        <option value="4">4th Year</option>
+      </select>
+      <button type="button" class="btn btn-primary" onclick="unpaid_search()"><i class="fa fa-magnifying-glass"></i> Search</button>
+    </form>
+
+  </div><br>
 <div class="page-content ttable">
   <div class="card shadow mb-4">
     <div class="card-body">
@@ -52,6 +83,25 @@ include('../footer.php');
 ?>
 
 <script>
+    function unpaid_search() {
+    let event = $('#add_eventt').val()
+    let rso = $('#add_organizationn').val();
+    let year_level = $('#year_leveel').val();
+
+    let data = '';
+    data += 'year_level=' + year_level + '&';
+    data += 'rso=' + rso + '&';
+    data += 'event=' + event;
+
+    if (year_level != '' && rso != '' && event != '') {
+      window.location.href = "unpaid_search?" + data;
+    } else {
+      alert("Please Input Filter")
+    }
+  }
+
+
+
   function send_receipt(payemnt_id) {
     $('#send_id').val(payemnt_id);
     $('#send_modal').modal('show');
@@ -122,56 +172,56 @@ include('../footer.php');
         }
 
       ],
-      dom: "Bfrtip",
-      buttons: [{
-          extend: "pageLength",
-          className: "btn-sm btn-success"
-        },
-        {
-          extend: "copy",
-          className: "btn-sm btn-success",
-          exportOptions: {
-            columns: [0, 1, 2, 3, 4, 5]
-          }
-        },
-        {
-          extend: "csv",
-          className: "btn-sm btn-success",
-          exportOptions: {
-            columns: [0, 1, 2, 3, 4, 5]
-          }
-        },
-        {
-          extend: "excel",
-          className: "btn-sm btn-success",
-          exportOptions: {
-            columns: [0, 1, 2, 3, 4, 5]
-          }
-        },
-        {
-          extend: "pdfHtml5",
-          className: "btn-sm btn-success",
-          exportOptions: {
-            columns: [0, 1, 2, 3, 4, 5]
-          }
-        },
-        {
-          extend: "print",
-          className: "btn-sm btn-success",
-          title: '.',
-          exportOptions: {
-            columns: [0, 1, 2, 3, 4, 5]
-          },
-          message: '<img src="../../assets/img/logo.png" height="100px" width="100px" style="position: absolute;top:0;left:50px;"><center><h4 style="margin-top:-40px;">REPUBLIC OF THE PHILIPPINES</h4>\
-							<h6>AGUSAN DEL SUR STATE COLLEGE OF AGRICULTURE AND TECHNOLOGY</h6>\
-							<h6>BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY</h6>\
-							</center><br>',
-          customize: function(win) {
-            $(win.document.body).find('table').append('<br<br/><br><br><br><h4 class="">Noted by:</h4><br><br><br><br><br><h4 class="">Prepared by:</h4>');
+      // dom: "Bfrtip",
+      // buttons: [{
+      //     extend: "pageLength",
+      //     className: "btn-sm btn-success"
+      //   },
+      //   {
+      //     extend: "copy",
+      //     className: "btn-sm btn-success",
+      //     exportOptions: {
+      //       columns: [0, 1, 2, 3, 4, 5]
+      //     }
+      //   },
+      //   {
+      //     extend: "csv",
+      //     className: "btn-sm btn-success",
+      //     exportOptions: {
+      //       columns: [0, 1, 2, 3, 4, 5]
+      //     }
+      //   },
+      //   {
+      //     extend: "excel",
+      //     className: "btn-sm btn-success",
+      //     exportOptions: {
+      //       columns: [0, 1, 2, 3, 4, 5]
+      //     }
+      //   },
+      //   {
+      //     extend: "pdfHtml5",
+      //     className: "btn-sm btn-success",
+      //     exportOptions: {
+      //       columns: [0, 1, 2, 3, 4, 5]
+      //     }
+      //   },
+      //   {
+      //     extend: "print",
+      //     className: "btn-sm btn-success",
+      //     title: '.',
+      //     exportOptions: {
+      //       columns: [0, 1, 2, 3, 4, 5]
+      //     },
+      //     message: '<img src="../../assets/img/logo.png" height="100px" width="100px" style="position: absolute;top:0;left:50px;"><center><h4 style="margin-top:-40px;">REPUBLIC OF THE PHILIPPINES</h4>\
+			// 				<h6>AGUSAN DEL SUR STATE COLLEGE OF AGRICULTURE AND TECHNOLOGY</h6>\
+			// 				<h6>BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY</h6>\
+			// 				</center><br>',
+      //     customize: function(win) {
+      //       $(win.document.body).find('table').append('<br<br/><br><br><br><h4 class="">Noted by:</h4><br><br><br><br><br><h4 class="">Prepared by:</h4>');
 
-          }
-        }
-      ]
+      //     }
+      //   }
+      // ]
     });
 
     //ADD Student per Payment
@@ -326,9 +376,8 @@ include('../footer.php');
     })
 
 
-
-    $('#add_organization').on('change', function() {
-      let organization_id = $("#add_organization option:selected").val();
+    $('#add_organizationn').on('change', function() {
+      let organization_id = $("#add_organizationn option:selected").val();
       $.ajax({
         type: "POST",
         url: "payments/payment_change_org",
@@ -337,7 +386,7 @@ include('../footer.php');
           organization_id: organization_id
         }
       }).done(function(data) {
-        $('#add_event').html(data);
+        $('#add_eventt').html(data);
       });
     });
 

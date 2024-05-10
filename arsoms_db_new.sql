@@ -2,8 +2,8 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 30, 2023 at 07:18 PM
+-- Host: 127.0.0.1:3308
+-- Generation Time: May 09, 2024 at 02:03 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -105,7 +105,7 @@ CREATE TABLE `tbl_events` (
 --
 
 INSERT INTO `tbl_events` (`event_id`, `organization_id`, `event_desc`, `expenses`, `photo`, `event_date`, `last_event_date`, `type`, `isActive`, `date_inserted`) VALUES
-(18, 29, 'Blood Letting', 20000, NULL, '2023-08-10 00:00:00', '2023-08-12 00:00:00', NULL, 1, '2023-10-01 13:34:23'),
+(18, 29, 'Blood Letting', 25000, NULL, '2023-08-10 00:00:00', '2023-08-12 00:00:00', NULL, 1, '2024-05-09 16:41:08'),
 (19, 30, 'Tactical', 10000, NULL, '2023-10-04 00:00:00', '2023-10-07 00:00:00', NULL, 1, '2023-10-01 13:53:53'),
 (20, 29, 'DAYDAY', 10000, NULL, '2023-10-25 00:00:00', '2023-10-26 00:00:00', NULL, 1, '2023-10-24 00:10:39'),
 (21, 29, 'NIGHTNIGHT', 50000, NULL, '2023-10-26 00:00:00', '2023-10-27 00:00:00', NULL, 1, '2023-10-24 00:48:00'),
@@ -134,8 +134,8 @@ CREATE TABLE `tbl_organization` (
   `roster` varchar(255) DEFAULT NULL,
   `type` varchar(100) DEFAULT NULL,
   `isActive` tinyint(4) DEFAULT NULL,
-  `status` tinyint(4) DEFAULT NULL COMMENT '0 = pending 1= accepted 2 = reject',
-  `remarks_reject` varchar(255) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT NULL COMMENT '0 = pending 1= accepted 2 = reject, 3 = expire 4 = reacredit',
+  `remarks_reject` varchar(500) DEFAULT NULL,
   `date_inserted` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -144,7 +144,7 @@ CREATE TABLE `tbl_organization` (
 --
 
 INSERT INTO `tbl_organization` (`organization_id`, `user_id`, `org_name`, `org_desc`, `address`, `email`, `number`, `logo`, `intent_letter`, `request_letter`, `form_membership`, `CBL`, `list_activities`, `roster`, `type`, `isActive`, `status`, `remarks_reject`, `date_inserted`) VALUES
-(29, 1, 'BSIT Organization', NULL, 'Purok 6, Barangay 4, San Francisco Agusan del Sur', 'ronaldbesinga287@gmail.com', '090928377123', '5195e3d1521a77cb2ce36cfecd17f3f6.png', '90536b8efaa87c602ac48302e967ded0.pdf', NULL, NULL, NULL, '65faea05bbcf15b188f4c87be13999cd.docx', 'a6635efe62dda4b89e3ba99389dae332.docx', 'Student Organization', 1, 1, 'Accredited', '2023-10-01 13:26:27'),
+(29, 1, 'BSIT Organization', NULL, 'Purok 6, Barangay 4, San Francisco Agusan del Sur', 'ronaldbesinga287@gmail.com', '090928377123', '5195e3d1521a77cb2ce36cfecd17f3f6.png', '90536b8efaa87c602ac48302e967ded0.pdf', NULL, NULL, NULL, '65faea05bbcf15b188f4c87be13999cd.docx', 'a6635efe62dda4b89e3ba99389dae332.docx', 'Student Organization', 1, 3, 'expire', '2023-10-01 13:26:27'),
 (31, 10, 'BSCRIM Organization', NULL, 'Alegria, San Francisco Agusan del Sur', 'best.ronald287@gmail.com', '09090697390', '74ceca47901f9dbd89126da625542a14.jpg', NULL, NULL, NULL, NULL, NULL, NULL, 'Student Organization', 1, 1, 'Accredited', '2023-10-23 21:38:21');
 
 -- --------------------------------------------------------
@@ -207,6 +207,7 @@ CREATE TABLE `tbl_payment` (
   `fee` int(11) DEFAULT NULL,
   `status` tinyint(4) DEFAULT NULL COMMENT '0 = pending payment 1 = paid 2 = sactioned 3 = sanction Paid',
   `sanction_remarks` varchar(255) DEFAULT NULL,
+  `due_date` varchar(50) NOT NULL,
   `date_inserted` datetime DEFAULT NULL,
   `date_receipt` datetime DEFAULT NULL COMMENT 'last 6 digits is the receipt number',
   `qr_image` varchar(255) DEFAULT NULL
@@ -216,18 +217,24 @@ CREATE TABLE `tbl_payment` (
 -- Dumping data for table `tbl_payment`
 --
 
-INSERT INTO `tbl_payment` (`payment_id`, `event_id`, `student_id`, `fee`, `status`, `sanction_remarks`, `date_inserted`, `date_receipt`, `qr_image`) VALUES
-(128, 19, 10, 100, 1, NULL, '2023-10-01 13:54:37', '2023-10-01 13:57:19', '005_file_d22e40276ac0a2e09c745d0e247965dd.png'),
-(129, 19, 10, 50, 3, 'Not attending the event', '2023-10-01 13:59:36', '2023-10-01 14:00:39', '005_file_e5a6946aeccac218acdd006c605848c5.png'),
-(130, 19, 11, 75, 3, 'afafawdaw', '2023-10-01 14:04:29', '2023-10-01 14:04:41', '005_file_e98002ab38ca88f2ca5e461cc99c5d2b.png'),
-(190, 18, 100, 50, 1, 'Tshirt Payment', '2023-11-04 18:19:40', '2023-12-30 04:22:43', '005_file_5867e4b0edb1ea35fa23146f85c8ceea.png'),
-(191, 22, 98, 100, 1, 'Tshirt Payment', '2023-11-04 19:05:52', '2023-11-04 19:06:22', '005_file_399f52a97f11f8b8ff3216751274cb3d.png'),
-(192, 22, 99, 100, 0, 'Tshirt Payment', '2023-11-04 19:05:52', NULL, NULL),
-(193, 22, 100, 100, 0, 'Tshirt Payment', '2023-11-04 19:05:52', NULL, NULL),
-(200, 20, 98, 1001, 0, 'no purpose', '2023-12-31 02:09:09', NULL, NULL),
-(201, 20, 99, 1001, 0, 'no purpose', '2023-12-31 02:09:09', NULL, NULL),
-(202, 20, 100, 1001, 0, 'no purpose', '2023-12-31 02:09:09', NULL, NULL),
-(203, 20, 101, 1001, 1, 'no purpose', '2023-12-31 02:09:09', '2023-12-31 02:14:30', '005_file_ee305fd76ad0e5b993909ba3fd0fca19.png');
+INSERT INTO `tbl_payment` (`payment_id`, `event_id`, `student_id`, `fee`, `status`, `sanction_remarks`, `due_date`, `date_inserted`, `date_receipt`, `qr_image`) VALUES
+(128, 19, 10, 100, 1, NULL, '', '2023-10-01 13:54:37', '2023-10-01 13:57:19', '005_file_d22e40276ac0a2e09c745d0e247965dd.png'),
+(129, 19, 10, 50, 3, 'Not attending the event', '', '2023-10-01 13:59:36', '2023-10-01 14:00:39', '005_file_e5a6946aeccac218acdd006c605848c5.png'),
+(130, 19, 11, 75, 3, 'afafawdaw', '', '2023-10-01 14:04:29', '2023-10-01 14:04:41', '005_file_e98002ab38ca88f2ca5e461cc99c5d2b.png'),
+(191, 22, 98, 100, 1, 'Tshirt Payment', '', '2023-11-04 19:05:52', '2023-11-04 19:06:22', '005_file_399f52a97f11f8b8ff3216751274cb3d.png'),
+(192, 22, 99, 100, 0, 'Tshirt Payment', '', '2023-11-04 19:05:52', NULL, NULL),
+(193, 22, 100, 100, 0, 'Tshirt Payment', '', '2023-11-04 19:05:52', NULL, NULL),
+(201, 20, 99, 1001, 1, 'no purpose', '', '2023-12-31 02:09:09', '2024-03-02 15:56:56', '005_file_9ba702eca13796616fdfef3ca707767d.png'),
+(203, 20, 101, 1001, 1, 'no purpose', '', '2023-12-31 02:09:09', '2023-12-31 02:14:30', '005_file_ee305fd76ad0e5b993909ba3fd0fca19.png'),
+(206, 20, 98, 100, 1, '6262', '2024-05-14', '2024-05-08 22:55:42', '2024-05-09 15:48:31', '005_file_6021c2ca4b38aad10c8fd3875e078186.png'),
+(210, 20, 102, 100, 1, '6262', '2024-05-14', '2024-05-08 22:55:42', '2024-05-09 15:48:33', '005_file_8a7e1f83bb202d57ce3c410163ecde81.png'),
+(223, 21, 98, 12, 2, 'wadwad', '', '2024-05-09 15:38:41', NULL, NULL),
+(229, 20, 100, 12, 2, 'awd', '', '2024-05-09 15:42:36', NULL, NULL),
+(231, 18, 98, 5000, 0, 'hhahaha', '2024-05-17', '2024-05-09 16:40:42', NULL, NULL),
+(232, 18, 99, 5000, 1, 'hhahaha', '2024-05-17', '2024-05-09 16:40:42', '2024-05-09 16:42:41', '005_file_af22a3d4fac81a8ea89e6bf8ac22b34c.png'),
+(233, 18, 100, 5000, 0, 'hhahaha', '2024-05-17', '2024-05-09 16:40:42', NULL, NULL),
+(234, 18, 101, 5000, 1, 'hhahaha', '2024-05-17', '2024-05-09 16:40:42', '2024-05-09 16:42:35', '005_file_575389aa4f7bed1cac41d9a40c44e358.png'),
+(235, 18, 102, 5000, 0, 'hhahaha', '2024-05-17', '2024-05-09 16:40:42', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -250,6 +257,51 @@ INSERT INTO `tbl_reports_profile` (`report_id`, `organization_id`, `reports_file
 (16, 29, 'member.xlsx', '2023-10-22 10:48:07'),
 (17, 29, 'Assurance & Security.xls', '2023-10-22 10:48:07'),
 (18, 31, 'HPM.docx', '2023-10-23 16:06:27');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_resolution`
+--
+
+CREATE TABLE `tbl_resolution` (
+  `resolution_id` int(11) NOT NULL,
+  `event_id` int(11) DEFAULT NULL,
+  `filename` varchar(500) DEFAULT NULL,
+  `date_inserted` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_resolution`
+--
+
+INSERT INTO `tbl_resolution` (`resolution_id`, `event_id`, `filename`, `date_inserted`) VALUES
+(1, 20, 'Face Paint Sample.docx', '2024-05-09 03:21:46');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_sanction_services`
+--
+
+CREATE TABLE `tbl_sanction_services` (
+  `service_id` int(11) NOT NULL,
+  `event_id` int(11) DEFAULT NULL,
+  `student_id` int(11) DEFAULT NULL,
+  `service` varchar(500) DEFAULT NULL,
+  `remarks` varchar(1000) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `date_inserted` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_sanction_services`
+--
+
+INSERT INTO `tbl_sanction_services` (`service_id`, `event_id`, `student_id`, `service`, `remarks`, `status`, `date_inserted`) VALUES
+(1, 18, 98, 'Community Service', 'awdawd', 1, '2024-05-09 11:26:40'),
+(3, 18, 99, 'awaw', 'asdawd', 0, '2024-05-09 11:38:29'),
+(4, 21, 99, 'wadawd', 'awdawd', 0, '2024-05-09 11:39:24');
 
 -- --------------------------------------------------------
 
@@ -279,7 +331,8 @@ INSERT INTO `tbl_students` (`student_id`, `username`, `password`, `fname`, `lnam
 (98, '41912144', '0d5961ce3c91287ddab1cd72e8525ae8', 'Shane Claire', 'Fernandez', 'Female', 4, 'shane@gmail.com', NULL, 29, 1),
 (99, '41912071', '202cb962ac59075b964b07152d234b70', 'Ronald', 'Besinga', 'Male', 4, 'ronaldbesinga287@gmail.com', NULL, NULL, 1),
 (100, '41912143', 'cea75d540a0a50626632ae5270d3d820', 'Renato', 'Angulo', 'Male', 4, 'renato@gmail.com', NULL, NULL, 1),
-(101, '41912122', '096d2eaa3e0c0f13470aa4a200db1e51', 'King', 'James', 'Male', 3, 'king@gmail.com', NULL, NULL, 1);
+(101, '41912122', '096d2eaa3e0c0f13470aa4a200db1e51', 'King', 'James', 'Male', 4, 'king@gmail.com', NULL, 29, 1),
+(102, '2342523', 'df427af84b7e8b06e38c411e9d0af632', 'ss', 'sefsef', 'Male', 4, 'rawr@gmail.com', NULL, 29, 1);
 
 -- --------------------------------------------------------
 
@@ -305,7 +358,8 @@ INSERT INTO `tbl_students_exists` (`exists_id`, `student_id_number`, `organizati
 (13, '41912144', 31, '2023-11-04 11:09:55'),
 (14, '41912071', 31, '2023-11-04 11:09:55'),
 (15, '41912143', 31, '2023-11-04 11:09:55'),
-(17, '41912122', 29, '2023-11-04 12:49:22');
+(17, '41912122', 29, '2023-11-04 12:49:22'),
+(18, '2342523', 29, '2024-01-26 20:23:31');
 
 -- --------------------------------------------------------
 
@@ -416,6 +470,18 @@ ALTER TABLE `tbl_reports_profile`
   ADD PRIMARY KEY (`report_id`);
 
 --
+-- Indexes for table `tbl_resolution`
+--
+ALTER TABLE `tbl_resolution`
+  ADD PRIMARY KEY (`resolution_id`);
+
+--
+-- Indexes for table `tbl_sanction_services`
+--
+ALTER TABLE `tbl_sanction_services`
+  ADD PRIMARY KEY (`service_id`);
+
+--
 -- Indexes for table `tbl_students`
 --
 ALTER TABLE `tbl_students`
@@ -453,7 +519,7 @@ ALTER TABLE `tbl_accomplishment`
 -- AUTO_INCREMENT for table `tbl_announcement`
 --
 ALTER TABLE `tbl_announcement`
-  MODIFY `announcement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `announcement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tbl_course`
@@ -477,7 +543,7 @@ ALTER TABLE `tbl_organization`
 -- AUTO_INCREMENT for table `tbl_organization_officers`
 --
 ALTER TABLE `tbl_organization_officers`
-  MODIFY `officer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `officer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `tbl_organization_profile`
@@ -489,7 +555,7 @@ ALTER TABLE `tbl_organization_profile`
 -- AUTO_INCREMENT for table `tbl_payment`
 --
 ALTER TABLE `tbl_payment`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=204;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=236;
 
 --
 -- AUTO_INCREMENT for table `tbl_reports_profile`
@@ -498,16 +564,28 @@ ALTER TABLE `tbl_reports_profile`
   MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
+-- AUTO_INCREMENT for table `tbl_resolution`
+--
+ALTER TABLE `tbl_resolution`
+  MODIFY `resolution_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tbl_sanction_services`
+--
+ALTER TABLE `tbl_sanction_services`
+  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `tbl_students`
 --
 ALTER TABLE `tbl_students`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT for table `tbl_students_exists`
 --
 ALTER TABLE `tbl_students_exists`
-  MODIFY `exists_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `exists_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `tbl_users`

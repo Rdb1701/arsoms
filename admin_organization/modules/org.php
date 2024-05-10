@@ -1,5 +1,19 @@
 <?php
 include("../header.php");
+
+$query_check = "
+SELECT * FROM tbl_organization
+WHERE user_id = '".$_SESSION['admin_org']['user_id']."' AND status = 3
+ORDER by org_name ASC
+";
+
+$result1 = $db->query($query_check);
+$numRows1 = $result1->num_rows;
+
+if($numRows1 > 0){
+  echo "<script>alert('Your Organization Accreditation is Expired!');</script>";
+}
+
 ?>
 <div class="page-heading">
   <h3 class="">Student Organization</h3>

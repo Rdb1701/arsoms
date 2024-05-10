@@ -15,6 +15,7 @@ include('../header.php');
                             <th class="text-center">Organization Name</th>
                             <th class="text-center">Event Name</th>
                             <th class="text-center">Date of Event</th>
+                            <th class="text-center">Due Date</th>
                             <th class="text-center">Obligation Fees</th>
                             <th class="text-center">Status</th>
                             <th class="text-center">Remarks</th>
@@ -95,6 +96,10 @@ include('../footer.php');
                 },
                 {
                     data: [6],
+                    "className": "text-center"
+                },
+                {
+                    data: [7],
                     "className": "text-center"
                 }
 

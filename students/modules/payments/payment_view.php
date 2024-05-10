@@ -48,6 +48,7 @@ if ($numRows > 0) {
       $temp_arr['date_inserted']    = date('F d,Y', strtotime($row['date_inserted']));
       $temp_arr['event_date']       = date('F d', strtotime($row['event_date']));
       $temp_arr['last_event_date']  = date('d, Y', strtotime($row['last_event_date']));
+      $temp_arr['due_date']         = date('F d,Y', strtotime($row['due_date']));
       
       $payments[] = $temp_arr;
     }
@@ -82,7 +83,7 @@ foreach($payments as $key => $value){
   </td>
     ";
 
-    $data['data'][] = array($value['org_name'],$value['event_desc'],$value['event_date'].' - '.$value['last_event_date'],'₱ '.$value['fee'],$value['status'],$remarks_sanction,$button);
+    $data['data'][] = array($value['org_name'],$value['event_desc'],$value['event_date'].' - '.$value['last_event_date'],$value['due_date'],'₱ '.$value['fee'],$value['status'],$remarks_sanction,$button);
   }
   
   echo json_encode($data);
